@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { LoginSignupModal } from "@/components/auth/LoginSignupModal";
+import LoginSignupModal from "@/components/auth/LoginSignupModal";
 import Link from "next/link";
 import Image from "next/image";
 import PlayIcon from "@/app/assets/play.svg";
 
-export function HeroSection() {
+const HeroSection = () => {
   return (
     <section
       id="hero"
@@ -49,4 +49,6 @@ export function HeroSection() {
       </div>
     </section>
   );
-}
+};
+
+export default HeroSection;

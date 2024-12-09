@@ -2,11 +2,11 @@
 import { benefits } from "@/app/lib/data";
 import { motion } from "framer-motion";
 
-export function BenefitsSection() {
+const BenefitsSection = () => {
   return (
     <section
       id="benefits"
-      className="relative overflow-hidden bg-gradient-to-b from-background to-background/50 py-16 md:py-24"
+      className="relative overflow-hidden bg-subtle-gray py-16 md:py-24 px-4"
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -48,4 +48,6 @@ export function BenefitsSection() {
       </motion.div>
     </section>
   );
-}
+};
+
+export default BenefitsSection;

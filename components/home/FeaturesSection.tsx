@@ -53,11 +53,11 @@ const FeatureCard = ({
   </div>
 );
 
-export function FeaturesSection() {
+const FeaturesSection = () => {
   return (
     <section
       id="features"
-      className="relative py-20 lg:py-32 lg:px-48 bg-gradient-to-b from-dark-green to-[#1a2b29] overflow-hidden"
+      className="relative py-20 px-4 lg:py-32 lg:px-48 bg-gradient-to-b from-dark-green to-[#1a2b29] overflow-hidden"
     >
       {/* Decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -94,4 +94,6 @@ export function FeaturesSection() {
       </div>
     </section>
   );
-}
+};
+
+export default FeaturesSection;

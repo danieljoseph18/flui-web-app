@@ -2,9 +2,12 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/app/lib/utils";
 import { plans } from "@/app/lib/data";
 
-export function PricingSection() {
+const PricingSection = () => {
   return (
-    <section id="pricing" className="py-8 md:py-12 lg:py-24 lg:px-48">
+    <section
+      id="pricing"
+      className="py-8 md:py-12 px-4 lg:py-24 lg:px-48 bg-subtle-gray"
+    >
       <div className="mx-auto flex flex-col items-center justify-center gap-4 text-center">
         <h2 className="text-3xl font-bold leading-[1.1] sm:text-3xl md:text-5xl">
           Membership Levels
@@ -70,4 +73,6 @@ export function PricingSection() {
       </div>
     </section>
   );
-}
+};
+
+export default PricingSection;

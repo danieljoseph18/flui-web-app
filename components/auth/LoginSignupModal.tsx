@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export function LoginSignupModal({ children }: { children: React.ReactNode }) {
+const LoginSignupModal = ({ children }: { children: React.ReactNode }) => {
   const [isLogin, setIsLogin] = useState(true);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,4 +68,6 @@ export function LoginSignupModal({ children }: { children: React.ReactNode }) {
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default LoginSignupModal;
