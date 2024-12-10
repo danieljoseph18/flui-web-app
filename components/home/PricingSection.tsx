@@ -29,9 +29,9 @@ const PricingSection = () => {
               <h3 className="text-2xl font-bold">{plan.name}</h3>
               <div className="flex items-baseline gap-1">
                 <span className="text-3xl font-bold">${plan.price}</span>
-                <span className="text-muted-foreground">/month</span>
+                <span className="text-gray-one">/month</span>
               </div>
-              <p className="text-muted-foreground">{plan.description}</p>
+              <p className="text-gray-one">{plan.description}</p>
               <Button
                 className={cn(
                   "mt-4",
@@ -48,9 +48,7 @@ const PricingSection = () => {
                     <svg
                       className={cn(
                         "h-4 w-4",
-                        plan.featured
-                          ? "text-main-green"
-                          : "text-muted-foreground"
+                        plan.featured ? "text-main-green" : "text-gray-one"
                       )}
                       fill="none"
                       stroke="currentColor"

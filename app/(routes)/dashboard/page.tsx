@@ -161,7 +161,7 @@ const Dashboard = () => {
                   <p className="text-sm font-medium leading-none">
                     {conversation.title}
                   </p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-one">
                     {conversation.language} • {conversation.date}
                   </p>
                 </div>

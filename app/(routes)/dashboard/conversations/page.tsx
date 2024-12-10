@@ -127,7 +127,7 @@ const ConversationsPage = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-one">
                 {conversation.language} • {conversation.date}
               </p>
             </CardContent>

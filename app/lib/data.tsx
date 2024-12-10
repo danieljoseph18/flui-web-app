@@ -1,119 +1,72 @@
+import {
+  Clock,
+  Mic,
+  Settings,
+  BarChart3,
+  Globe,
+  MessageSquare,
+  PiggyBank,
+  Globe2,
+  BookOpen,
+} from "lucide-react";
+
+export const features = [
+  {
+    icon: Globe2,
+    title: "Real-Time Language Conversation Practice",
+    description:
+      "Master any language through natural, flowing conversations with our advanced AI tutor. Practice speaking French, Japanese, Spanish, or any other language without scheduling hassles - just open the app and start talking.",
+  },
+  {
+    icon: BookOpen,
+    title: "Personalized Language Learning Journey",
+    description:
+      "Our AI language tutor automatically adjusts to your proficiency level, creating custom speaking exercises that take you from intermediate to fluent. Perfect for learners who want to improve their speaking skills beyond basic language apps.",
+  },
+  {
+    icon: PiggyBank,
+    title: "Affordable Language Tutoring Alternative",
+    description:
+      "Get unlimited language practice for a fraction of traditional tutoring costs. Practice speaking any language whenever you want, without expensive hourly rates.",
+  },
+];
+
 export const benefits = [
   {
-    title: "24/7 Access",
-    description: "Learn anytime, anywhere with our AI tutors",
-    icon: ({ className }: { className?: string }) => (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={className}
-      >
-        <circle cx="12" cy="12" r="10" />
-        <polyline points="12 6 12 12 16 14" />
-      </svg>
-    ),
+    title: "Flexible Language Practice Schedule",
+    description:
+      "Practice speaking your target language 24/7 – ideal for busy professionals and students who can't commit to fixed class schedules.",
+    icon: Clock,
   },
   {
-    title: "Native Speech",
-    description: "Practice with natural, native-like conversations",
-    icon: ({ className }: { className?: string }) => (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={className}
-      >
-        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
-        <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-        <line x1="12" x2="12" y1="19" y2="22" />
-      </svg>
-    ),
+    title: "Confidence-Building Environment",
+    description:
+      "Develop natural speaking skills in a supportive space where you can practice without judgment. Perfect for overcoming language speaking anxiety.",
+    icon: Mic,
   },
   {
-    title: "Instant Feedback",
-    description: "Get real-time corrections and improvements",
-    icon: ({ className }: { className?: string }) => (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={className}
-      >
-        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-        <path d="m9 12 2 2 4-4" />
-      </svg>
-    ),
+    title: "Intelligent Conversation Pacing",
+    description:
+      "Whether you need slow, clear pronunciation guidance or want to practice rapid native-speed conversations, our AI adapts to help you improve your speaking skills.",
+    icon: Settings,
   },
   {
-    title: "Progress Tracking",
-    description: "Monitor your improvement over time",
-    icon: ({ className }: { className?: string }) => (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={className}
-      >
-        <path d="M3 3v18h18" />
-        <path d="m19 9-5 5-4-4-3 3" />
-      </svg>
-    ),
+    title: "Structured Language Learning",
+    description:
+      "No preparation needed – our AI creates engaging speaking practice sessions tailored to your language goals and current level.",
+    icon: BarChart3,
   },
   {
-    title: "Multiple Languages",
-    description: "Learn any language you want",
-    icon: ({ className }: { className?: string }) => (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={className}
-      >
-        <path d="M2 12h20" />
-        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-        <path d="M12 2a15.3 15.3 0 0 0 4 10 15.3 15.3 0 0 0-4 10 15.3 15.3 0 0 0-4-10 15.3 15.3 0 0 0 4-10z" />
-      </svg>
-    ),
+    title: "Real-World Conversation Scenarios",
+    description:
+      "Practice speaking in authentic situations like business meetings, travel conversations, or casual chats. Our AI simulates real-world interactions to prepare you for actual language use.",
+    icon: Globe,
   },
   {
-    title: "Personalized",
-    description: "Adaptive learning path for you",
-    icon: ({ className }: { className?: string }) => (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={className}
-      >
-        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-        <circle cx="12" cy="7" r="4" />
-      </svg>
-    ),
+    title: "Instant Pronunciation Feedback",
+    description:
+      "Receive immediate, detailed feedback on your pronunciation and intonation. Our AI helps you perfect your accent with targeted exercises and real-time corrections.",
+    icon: MessageSquare,
   },
 ];
 
@@ -158,23 +111,28 @@ export const plans = [
 
 export const faqs = [
   {
-    question: "How does the AI language tutor work?",
+    question: "How is this different from other language learning apps?",
     answer:
-      "Our AI tutor uses advanced language models to engage in natural conversations with you in your target language. It adapts to your proficiency level and provides instant feedback on your grammar, pronunciation, and vocabulary.",
+      "Our AI tutor uses advanced language models to engage in natural conversations with you in your target language. It adapts to your proficiency level and provides instant feedback on your grammar, pronunciation, and vocabulary.While most apps focus on basic vocabulary and grammar, we specialize in helping intermediate learners achieve fluency through real-time speaking practice. Our AI provides unlimited conversation practice that adapts to your level – something traditional language apps can't offer.",
   },
   {
-    question: "Which languages are available?",
+    question: "How does the AI language tutor adapt to my speaking level?",
     answer:
-      "Out the box, we support all languages. Whether you want to learn French, Spanish, German, Italian, Chinese, Japanese, or any other language, we've got you covered.",
+      "Our advanced AI assesses your speaking ability in real-time and adjusts its language complexity, speaking speed, and teaching approach accordingly. As your speaking skills improve, it gradually increases the challenge to ensure continuous progress.",
   },
   {
-    question: "Can I switch between different languages?",
+    question: "Can AI really help me improve my speaking skills?",
     answer:
-      "Yes! You can learn multiple languages simultaneously and switch between them at any time. Each language's progress is tracked separately.",
+      "Yes! Our AI tutor offers unique advantages over traditional methods: 24/7 availability for language practice, consistent patience with pronunciation, zero judgment when making mistakes, and unlimited speaking practice at a fraction of traditional tutoring costs. Many users report faster progress due to more frequent speaking practice opportunities.",
   },
   {
-    question: "How does the pricing work?",
+    question: "Which languages can I practice speaking?",
     answer:
-      "We offer three subscription tiers: Monthly, Quarterly, and Yearly. All plans include unlimited conversations with our AI tutor. The higher tiers include additional features like advanced analytics, pronunciation feedback, and custom learning paths.",
+      "Practice speaking any major language including French, Spanish, Japanese, Korean, and many others. Our AI maintains consistent quality across all languages, ensuring effective speaking practice regardless of your chosen language.",
+  },
+  {
+    question: "How much can I save compared to traditional language tutors?",
+    answer:
+      "Traditional language tutors typically charge $30-50 per hour, costing $600-1000 monthly for regular speaking practice. Our unlimited language practice service starts at just $29/month – saving you up to 97% while providing unlimited conversation practice time.",
   },
 ];

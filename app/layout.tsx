@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "LingualAI - AI-Powered Language Learning",
-  description: "Master any language with AI-powered conversations",
+  description: "Master any language fluently with AI-powered conversations",
 };
 
 export default function RootLayout({

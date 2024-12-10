@@ -8,17 +8,18 @@ const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="flex flex-col items-center space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32 lg:px-48 bg-light-green"
+      className="flex flex-col items-center space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32 px-4 lg:px-48 bg-light-green"
     >
-      <div className=" flex flex-col items-center gap-4 text-center max-w-[60rem]">
-        <h1 className="text-4xl font-bold sm:text-5xl md:text-6xl lg:text-7xl">
-          Master Any Language with{" "}
+      <div className=" flex flex-col items-center gap-6 text-center max-w-[60rem]">
+        <h1 className="text-3xl font-semibold md:text-5xl lg:text-7xl">
+          Master Any Language fluently with{" "}
           <span className="text-main-green">AI-Powered</span> Conversations
         </h1>
-        <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-          Experience personalized language tutoring through natural
-          conversations with our advanced AI. Learn at your own pace, any time,
-          anywhere.
+        <p className="leading-normal text-gray-one text-sm md:text-lg sm:leading-8">
+          Transform your language speaking skills through real-time AI
+          conversations. Practice speaking any language 24/7 with your personal
+          AI language tutor, to take you from intermediate to fluent, for a
+          fraction of the cost.
         </p>
         <div className="flex items-center gap-8">
           <LoginSignupModal>

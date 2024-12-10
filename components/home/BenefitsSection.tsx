@@ -6,7 +6,7 @@ const BenefitsSection = () => {
   return (
     <section
       id="benefits"
-      className="relative overflow-hidden bg-subtle-gray py-16 md:py-24 px-4"
+      className="relative overflow-hidden bg-subtle-gray py-16 md:py-24 px-4 lg:px-48"
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -15,12 +15,14 @@ const BenefitsSection = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex max-w-[58rem] mx-auto flex-col items-center justify-center gap-6 text-center mb-16">
-          <h2 className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl bg-gradient-to-r from-main-green to-main-green/80 bg-clip-text text-transparent">
-            Membership Benefits
+          <h2 className="text-4xl font-bold leading-tight md:text-5xl">
+            Advanced Language Learning Features
           </h2>
-          <p className="max-w-[85%] text-lg leading-relaxed text-gray-one md:text-xl">
-            Unlock the full potential of language learning with our
-            comprehensive features
+          <p className="leading-relaxed text-gray-one">
+            Break through the language barrier with unlimited speaking practice.
+            Our AI language tutor adapts to your level, helping you achieve true
+            fluency in any language - from French and Spanish to Japanese and
+            Korean.
           </p>
         </div>
 
