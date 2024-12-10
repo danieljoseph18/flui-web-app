@@ -24,9 +24,7 @@ const Header = () => {
       <div className="flex h-20 items-center justify-between py-6 w-full">
         <div className="flex gap-6 md:gap-10">
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-main-green">
-              LingualAI
-            </span>
+            <span className="text-2xl font-bold text-main-green">Fluify</span>
           </Link>
         </div>
         <div className="md:hidden">
