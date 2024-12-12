@@ -123,45 +123,6 @@ export const benefits = [
   },
 ];
 
-export const plans = [
-  {
-    name: "Monthly",
-    price: "29",
-    description: "Perfect for casual learners",
-    features: [
-      "Unlimited conversations",
-      "All languages available",
-      "Basic progress tracking",
-      "Email support",
-    ],
-  },
-  {
-    name: "Quarterly",
-    price: "79",
-    description: "Best value for committed learners",
-    featured: true,
-    features: [
-      "Everything in Monthly",
-      "Advanced progress analytics",
-      "Pronunciation feedback",
-      "Priority support",
-      "Custom learning paths",
-    ],
-  },
-  {
-    name: "Yearly",
-    price: "199",
-    description: "For serious language enthusiasts",
-    features: [
-      "Everything in Quarterly",
-      "1-on-1 tutor sessions",
-      "Offline mode",
-      "Custom vocabulary lists",
-      "Certificate of completion",
-    ],
-  },
-];
-
 export const faqs = [
   {
     question: "How is this different from other language learning apps?",

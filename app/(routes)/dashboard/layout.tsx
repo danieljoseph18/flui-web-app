@@ -1,11 +1,18 @@
-import { ReactNode } from "react";
+"use client";
 
-const DashboardLayout = ({ children }: { children: ReactNode }) => {
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import SubscriptionProtectedRoute from "@/components/auth/SubscriptionProtectedRoute";
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <div className="flex h-screen overflow-hidden">
-      <main className="flex-1 overflow-y-auto">{children}</main>
-    </div>
+    <ProtectedRoute>
+      <SubscriptionProtectedRoute>
+        <main className="min-h-screen bg-background">{children}</main>
+      </SubscriptionProtectedRoute>
+    </ProtectedRoute>
   );
-};
-
-export default DashboardLayout;
+}

@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "Flui - AI-Powered Language Learning",
   description:
     "Go from intermediate to fluent in any language with AI-powered classes.",
 };
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -18,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main>{children}</main>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
