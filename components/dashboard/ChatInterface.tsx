@@ -3,6 +3,7 @@ import { ChatInput } from "./ChatInput";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { ChatMessage } from "./ChatMessage";
 import { messages } from "@/app/lib/data";
+import VoiceChat from "./VoiceChat";
 
 const ChatInterface = () => {
   return (
@@ -15,6 +16,7 @@ const ChatInterface = () => {
         </div>
       </ScrollArea>
       <ChatInput />
+      <VoiceChat />
     </div>
   );
 };
