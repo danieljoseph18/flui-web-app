@@ -4,17 +4,16 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { RealtimeClient } from "@openai/realtime-api-beta";
 import { WavRecorder, WavStreamPlayer } from "@/app/lib/wavtools";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Mic, X, Zap } from "lucide-react";
 import { ItemType } from "@openai/realtime-api-beta/dist/lib/client";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import FluiFrog from "@/app/assets/images/flui-frog.png";
+import { MoreVertical } from "lucide-react";
+import { useSettings } from "@/store/useSettings";
+import { useTutorInstructions } from "@/hooks/useTutorInstructions";
 
 const WS_BACKEND_URL =
   process.env.NEXT_PUBLIC_WS_BACKEND_URL || "ws://localhost:8081";
@@ -32,6 +31,14 @@ const VoiceChat = () => {
   const wavRecorderRef = useRef(new WavRecorder({ sampleRate: 24000 }));
   const wavStreamPlayerRef = useRef(new WavStreamPlayer({ sampleRate: 24000 }));
   const clientRef = useRef(new RealtimeClient({ url: WS_BACKEND_URL }));
+
+  const { targetLanguage, nativeLanguage, skillLevel } = useSettings();
+
+  const instructions = useTutorInstructions({
+    targetLanguage,
+    nativeLanguage,
+    skillLevel,
+  });
 
   // Connect to conversation
   const connectConversation = useCallback(async () => {
@@ -127,6 +134,8 @@ const VoiceChat = () => {
     const client = clientRef.current;
     const wavStreamPlayer = wavStreamPlayerRef.current;
 
+    // Set instructions
+    client.updateSession({ instructions: instructions });
     // Set up transcription
     client.updateSession({ input_audio_transcription: { model: "whisper-1" } });
 
@@ -154,44 +163,63 @@ const VoiceChat = () => {
   }, []);
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle>Voice Chat</CardTitle>
-      </CardHeader>
-
+    <Card className="flex flex-col justify-between w-full h-full bg-transparent border-none shadow-none">
       <CardContent className="space-y-4">
         {/* Conversation Display */}
-        <div className="h-96 overflow-y-auto space-y-4 p-4 border rounded-md">
+        <div className="h-full overflow-y-auto space-y-4 p-4 rounded-md">
           {items.map((item: any) => (
             <div
               key={item.id}
-              className={`p-3 rounded-lg ${
-                item.role === "assistant"
-                  ? "bg-secondary ml-4"
-                  : "bg-primary text-primary-foreground mr-4"
+              className={`group relative flex gap-3 ${
+                item.role === "user" ? "justify-end" : ""
               }`}
             >
-              <div className="font-medium mb-1">
-                {item.role === "assistant" ? "Assistant" : "You"}
-              </div>
-              <div>
+              {item.role === "assistant" && (
+                <div className="flex flex-col !min-h-full justify-end">
+                  <Avatar className="h-8 w-8 bg-gray-four">
+                    <AvatarImage src={FluiFrog.src} />
+                    <AvatarFallback>AI</AvatarFallback>
+                  </Avatar>
+                </div>
+              )}
+              {item.role === "user" && (
+                <div className="flex flex-col !min-h-full justify-end order-last">
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback>You</AvatarFallback>
+                  </Avatar>
+                </div>
+              )}
+              <div
+                className={`relative max-w-[85%] px-3 py-2 text-sm ${
+                  item.role === "user"
+                    ? "bg-pastel-blue rounded-xl rounded-br-md"
+                    : "bg-gray-four text-gray-three rounded-xl rounded-bl-md"
+                }`}
+              >
                 {item.formatted.transcript ||
                   item.formatted.text ||
                   (item.formatted.audio?.length ? "(processing...)" : "")}
+                {item.formatted.file && (
+                  <audio
+                    className="mt-2 w-full"
+                    src={item.formatted.file.url}
+                    controls
+                  />
+                )}
               </div>
-              {item.formatted.file && (
-                <audio
-                  className="mt-2 w-full"
-                  src={item.formatted.file.url}
-                  controls
-                />
-              )}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute -right-10 top-0 hidden h-8 w-8 group-hover:flex"
+              >
+                <MoreVertical className="h-4 w-4" />
+              </Button>
             </div>
           ))}
         </div>
       </CardContent>
 
-      <CardFooter className="space-x-4">
+      <CardFooter className="flex items-center justify-between space-x-4">
         {/* VAD Toggle */}
         <div className="flex items-center space-x-2">
           <Switch
@@ -200,7 +228,9 @@ const VoiceChat = () => {
             onCheckedChange={handleVADToggle}
             disabled={isConnected}
           />
-          <Label htmlFor="vad-mode">Voice Activity Detection</Label>
+          <Label htmlFor="vad-mode" className="text-white">
+            Enable Push to Talk
+          </Label>
         </div>
 
         {/* Push to Talk Button */}

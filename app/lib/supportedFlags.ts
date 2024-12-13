@@ -75,3 +75,8 @@ export const supportedFlags: {
     flag: "/images/flags/usa-flag.png",
   },
 ];
+
+export const getFlagForLanguage = (language: string) => {
+  const flag = supportedFlags.find((flag) => flag.name === language);
+  return flag ? flag.flag : null;
+};
