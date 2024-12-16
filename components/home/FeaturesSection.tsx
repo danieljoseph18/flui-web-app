@@ -27,25 +27,47 @@ const FeaturesSection = () => {
 
         {/* Conveyor belt of flags */}
 
-        <div className="overflow-hidden whitespace-nowrap py-4">
-          <div className="flex animate-scroll">
+        <div className="overflow-hidden whitespace-nowrap py-4 relative">
+          <div className="flex animate-scroll" style={{ width: "fit-content" }}>
             {/* First set of flags */}
             {supportedFlags.map((flag) => (
               <Image
                 src={flag.flag}
                 alt={`${flag.name} flag`}
-                className="w-16 h-16 mx-8 cursor-pointer flag-spin"
+                className="w-16 h-16 mx-4 cursor-pointer flag-spin"
                 width={128}
                 height={128}
                 key={flag.name}
               />
             ))}
-            {/* Duplicate set of flags to create seamless loop */}
+            {/* Duplicate set of flags */}
             {supportedFlags.map((flag) => (
               <Image
                 src={flag.flag}
                 alt={`${flag.name} flag`}
-                className="w-16 h-16 mx-8 cursor-pointer flag-spin"
+                className="w-16 h-16 mx-4 cursor-pointer flag-spin"
+                width={128}
+                height={128}
+                key={`${flag.name}-duplicate`}
+              />
+            ))}
+            {/* Duplicate set of flags */}
+            {supportedFlags.map((flag) => (
+              <Image
+                src={flag.flag}
+                alt={`${flag.name} flag`}
+                className="w-16 h-16 mx-4 cursor-pointer flag-spin"
+                width={128}
+                height={128}
+                key={`${flag.name}-duplicate`}
+              />
+            ))}
+            {/* Duplicate set of flags */}
+            {supportedFlags.map((flag) => (
+              <Image
+                src={flag.flag}
+                alt={`${flag.name} flag`}
+                className="w-16 h-16 mx-4 cursor-pointer flag-spin"
                 width={128}
                 height={128}
                 key={`${flag.name}-duplicate`}

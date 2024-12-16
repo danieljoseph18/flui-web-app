@@ -33,7 +33,7 @@ const PricingSection = ({ isModal = false }: PricingSectionProps) => {
       id="pricing"
       className={cn(
         "py-8 md:py-12 lg:py-24",
-        isModal ? "px-0 bg-transparent" : "px-4 lg:px-48 bg-subtle-gray"
+        isModal ? "px-0 bg-transparent" : "px-4 xl:px-48 bg-subtle-gray"
       )}
     >
       {!isModal && (
@@ -51,14 +51,22 @@ const PricingSection = ({ isModal = false }: PricingSectionProps) => {
           <div
             key={plan.name}
             className={cn(
-              "relative overflow-hidden rounded-lg border bg-background p-8",
+              "relative overflow-hidden rounded-lg border bg-background p-8 shadow-green-glow",
               plan.featured && "border-main-green border-2"
             )}
           >
+            {plan.featured && (
+              <div className="absolute -right-[40px] top-[32px] rotate-45 bg-main-green px-10 min-w-[200px] text-center py-1 text-sm font-semibold text-white">
+                Best Value
+              </div>
+            )}
             <div className="flex flex-col gap-4">
               <h3 className="text-2xl font-bold">{plan.name}</h3>
               <div className="flex items-baseline gap-1">
                 <span className="text-3xl font-bold">${plan.price}</span>
+                <span className="text-gray-one line-through text-lg ml-2">
+                  ${plan.originalPrice}
+                </span>
                 <span className="text-gray-one">/month</span>
               </div>
               <p className="text-gray-one">{plan.description}</p>

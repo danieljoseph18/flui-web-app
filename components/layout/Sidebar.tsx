@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { ProfileCard } from "../dashboard/ProfileCard";
 import { RiHomeLine } from "react-icons/ri";
 import Link from "next/link";
-import { scenarios } from "@/app/lib/data";
+import { scenarios } from "@/app/lib/content/scenarios";
 
 export const Sidebar = () => {
   return (

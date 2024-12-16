@@ -1,13 +1,13 @@
 export const plans = [
   {
-    name: "Monthly",
-    price: "29",
+    name: "Hobbyist",
+    price: "29.99",
+    originalPrice: "39.99",
     description: "Perfect for casual learners",
     features: [
-      "Unlimited conversations",
-      "All languages available",
-      "Basic progress tracking",
-      "Email support",
+      "60 minutes of lessons per month",
+      "Additional minutes: $0.50/minute",
+      "Basic Email support",
     ],
     link:
       process.env.NODE_ENV === "development"
@@ -19,16 +19,15 @@ export const plans = [
         : "",
   },
   {
-    name: "Quarterly",
-    price: "79",
+    name: "Enthusiast",
+    price: "49.99",
+    originalPrice: "79.99",
     description: "Best value for committed learners",
     featured: true,
     features: [
-      "Everything in Monthly",
-      "Advanced progress analytics",
-      "Pronunciation feedback",
+      "180 minutes/month",
+      "Additional minutes: $0.40/minute",
       "Priority support",
-      "Custom learning paths",
     ],
     link:
       process.env.NODE_ENV === "development"
@@ -40,15 +39,15 @@ export const plans = [
         : "",
   },
   {
-    name: "Yearly",
-    price: "199",
-    description: "For serious language enthusiasts",
+    name: "Fluency Fast-track",
+    price: "149.99",
+    originalPrice: "249.99",
+    description: "Best to become fluent ASAP",
     features: [
-      "Everything in Quarterly",
-      "1-on-1 tutor sessions",
-      "Offline mode",
-      "Custom vocabulary lists",
-      "Certificate of completion",
+      "500 minutes/month",
+      "Additional minutes: $0.30/minute",
+      "Priority support",
+      "Custom Feature Requests",
     ],
     link:
       process.env.NODE_ENV === "development"

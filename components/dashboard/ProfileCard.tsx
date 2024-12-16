@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Equal } from "lucide-react";
-import FluiFrog from "@/app/assets/images/flui-frog.png";
 import Image from "next/image";
 import { useState } from "react";
 import SettingsModal from "./SettingsModal";
@@ -29,7 +28,7 @@ export const ProfileCard = ({ name, description }: ProfileCardProps) => {
       <div className="mb-4 text-sm uppercase">Tutor</div>
       <div className="mb-4 flex justify-center">
         <Image
-          src={FluiFrog}
+          src={"/images/common/flui-og-logo.png"}
           alt="Avatar"
           className="w-42"
           width={600}

@@ -166,7 +166,7 @@ const VoiceChat = () => {
     <Card className="flex flex-col justify-between w-full h-full bg-transparent border-none shadow-none">
       <CardContent className="space-y-4">
         {/* Conversation Display */}
-        <div className="h-full overflow-y-auto space-y-4 p-4 rounded-md">
+        <div className="h-[calc(100vh-200px)] overflow-y-auto space-y-4 p-4 rounded-md">
           {items.map((item: any) => (
             <div
               key={item.id}

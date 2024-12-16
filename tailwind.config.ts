@@ -105,6 +105,9 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.8s ease-out",
       },
+      boxShadow: {
+        "green-glow": "0 0 25px rgba(56, 199, 77, 0.2)",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

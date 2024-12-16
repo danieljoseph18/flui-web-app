@@ -1,0 +1,29 @@
+@keyframes swipeRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%);
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(50%);
+  }
+}
+
+.swipe-indicator {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 10;
+  animation: swipeRight 2s ease-in-out;
+  animation-delay: 1s;
+  opacity: 0;
+}

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import LoginSignupModal from "@/components/auth/LoginSignupModal";
 import { useState } from "react";
+import { FaBoltLightning } from "react-icons/fa6";
+import Image from "next/image";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,6 +26,13 @@ const Header = () => {
       <div className="flex h-20 items-center justify-between py-6 w-full">
         <div className="flex gap-6 md:gap-10">
           <Link href="/" className="flex items-center space-x-2">
+            <Image
+              src={"/images/common/flui-og-logo.png"}
+              alt="Flui Logo"
+              width={100}
+              height={100}
+              className="w-7"
+            />
             <span className="text-2xl font-bold text-main-green">Flui</span>
           </Link>
         </div>
@@ -46,8 +55,8 @@ const Header = () => {
           </button>
         </div>
         <nav
-          className={`absolute top-20 left-0 w-full bg-light-green rounded-b-md md:static md:flex md:flex-row md:justify-end items-center gap-6 py-2 ${
-            isMenuOpen ? "flex flex-col" : "hidden"
+          className={`absolute top-20 left-0 w-full z-50 bg-light-green rounded-b-md md:static md:flex md:space-x-6 md:w-auto ${
+            isMenuOpen ? "flex flex-col py-10 px-4" : "hidden"
           }`}
         >
           <button
@@ -63,8 +72,9 @@ const Header = () => {
             Pricing
           </button>
           <LoginSignupModal>
-            <Button className="bg-main-green text-white hover:bg-green-hover py-2">
-              Sign In
+            <Button className="bg-main-green text-white hover:bg-green-hover py-2 flex items-center gap-2">
+              <FaBoltLightning size={16} />
+              Get Started
             </Button>
           </LoginSignupModal>
         </nav>

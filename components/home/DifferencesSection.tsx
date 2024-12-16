@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -8,7 +10,10 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { features } from "@/app/lib/data";
+import { features } from "@/app/lib/content/features";
+import { FaBoltLightning } from "react-icons/fa6";
+import { MdSwipeRight } from "react-icons/md";
+import "@/app/styles/swipe-animation.css";
 
 const DifferenceCard = ({
   icon: Icon,
@@ -19,7 +24,7 @@ const DifferenceCard = ({
   title: string;
   description: string;
 }) => (
-  <Card className="relative h-full bg-white shadow-md">
+  <Card className="relative h-full bg-white shadow-green-glow hover:border hover:border-main-green transition-all duration-300">
     <CardContent className="pt-6 px-6">
       <div
         className="mb-4 size-12 rounded-full flex items-center justify-center"
@@ -56,9 +61,25 @@ const DifferenceCard = ({
   </Card>
 );
 
-export const DifferencesSection = () => {
+const DifferencesSection = () => {
+  const [showSwipeIndicator, setShowSwipeIndicator] = useState(false);
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      setShowSwipeIndicator(true);
+      // Hide the indicator after animation
+      const timer = setTimeout(() => {
+        setShowSwipeIndicator(false);
+      }, 3000); // 3 seconds total (1s delay + 2s animation)
+      return () => clearTimeout(timer);
+    }
+  }, [inView]);
+
   return (
-    <section className="py-16 px-4 lg:px-48 bg-subtle-gray">
+    <section className="py-16 px-4 xl:px-48 bg-subtle-gray">
       <div className="text-center mb-12">
         <h2 className="text-4xl font-bold mb-4 text-gray-900">
           Why Choose Flui?
@@ -79,7 +100,7 @@ export const DifferencesSection = () => {
       </div>
 
       {/* Mobile view - Carousel */}
-      <div className="md:hidden">
+      <div className="md:hidden relative" ref={ref}>
         <Carousel className="w-full max-w-sm mx-auto">
           <CarouselContent>
             {features.map((feature, index) => (
@@ -91,10 +112,17 @@ export const DifferencesSection = () => {
             ))}
           </CarouselContent>
         </Carousel>
+
+        {showSwipeIndicator && (
+          <div className="swipe-indicator">
+            <MdSwipeRight className="text-black w-20 h-20" />
+          </div>
+        )}
       </div>
 
       <div className="text-center mt-8">
-        <Button size="lg" className="bg-main-green hover:bg-green-hover">
+        <Button className="bg-main-green text-white hover:bg-green-hover rounded-md">
+          <FaBoltLightning size={16} />
           Get Started
         </Button>
       </div>

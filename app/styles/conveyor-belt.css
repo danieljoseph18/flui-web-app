@@ -3,7 +3,7 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
   }
 }
 
@@ -17,8 +17,29 @@
 }
 
 .animate-scroll {
-  display: flex;
+  display: inline-flex;
   animation: scroll 40s linear infinite;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Create a wrapper that's exactly double the width */
+.scroll-wrapper {
+  display: inline-flex;
+  width: max-content;
+}
+
+/* Container to hide overflow and maintain width */
+.scroll-container {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
 }
 
 .flag-spin {

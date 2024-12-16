@@ -44,7 +44,7 @@ export default function PlansPage() {
   }, [session?.user?.id, router]);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-subtle-gray">
       <div className="container mx-auto py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Upgrade Your Account</h1>
