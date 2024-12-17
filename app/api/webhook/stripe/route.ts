@@ -10,9 +10,6 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_KEY!
 );
 
-// Toggle to enable detailed logging
-const WEBHOOK_DEBUG = false;
-
 // Map Stripe subscription status to our database status
 function mapSubscriptionStatus(stripeStatus: string): string {
   switch (stripeStatus) {
@@ -51,32 +48,7 @@ const updateUserSubscription = async (
     currentPeriodEnd?: number;
   }
 ) => {
-  if (WEBHOOK_DEBUG) {
-    console.log("🔄 Updating subscription for:", {
-      customerEmail,
-      stripeCustomerId,
-      subscriptionStatus: subscriptionData.status,
-      supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL?.slice(0, 10) + "...", // Log partial URL for debugging
-    });
-  }
-
   try {
-    // Modify the health check to include more detailed error information
-    const { data: healthCheck, error: healthError } = await supabase
-      .from("users")
-      .select("count(*)", { count: "exact", head: true })
-      .limit(1);
-
-    if (healthError) {
-      console.error("❌ Database connection error:", {
-        message: healthError.message,
-        details: healthError.details,
-        hint: healthError.hint,
-        code: healthError.code,
-      });
-      throw new Error(`Database connection failed: ${healthError.message}`);
-    }
-
     // First get the user by email
     const { data: users, error: userError } = await supabase
       .from("users")
@@ -136,41 +108,10 @@ const updateUserSubscription = async (
   }
 };
 
-async function testDatabaseConnection() {
-  try {
-    const { data, error } = await supabase
-      .from("users")
-      .select("count(*)", { count: "exact", head: true });
-    if (error) throw error;
-    console.log("✅ Database connection successful");
-    return true;
-  } catch (error) {
-    console.error("❌ Database connection test failed:", {
-      error,
-      supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL?.slice(0, 10) + "...",
-      hasServiceKey: !!process.env.SUPABASE_SERVICE_KEY,
-    });
-    return false;
-  }
-}
-
 export async function POST(request: NextRequest) {
-  if (WEBHOOK_DEBUG) {
-    console.log("🎯 Webhook endpoint hit");
-    await testDatabaseConnection();
-  }
-
   try {
     const body = await request.text();
     const signature = request.headers.get("stripe-signature");
-
-    if (WEBHOOK_DEBUG) {
-      console.log("📝 Request details:", {
-        hasSignature: !!signature,
-        hasWebhookSecret: !!webhookSecret,
-        bodyLength: body.length,
-      });
-    }
 
     if (!signature || !webhookSecret) {
       console.error("❌ Missing webhook signature or secret", {
@@ -185,9 +126,8 @@ export async function POST(request: NextRequest) {
     let event: Stripe.Event;
     try {
       event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-      if (WEBHOOK_DEBUG) {
-        console.log("✅ Webhook signature verified, event type:", event.type);
-      }
+
+      console.log("✅ Webhook signature verified, event type:", event.type);
     } catch (err) {
       console.error("❌ Webhook signature verification failed:", err);
       return new NextResponse(
@@ -206,9 +146,8 @@ export async function POST(request: NextRequest) {
       case "customer.subscription.created":
       case "customer.subscription.updated":
       case "customer.subscription.deleted":
-        if (WEBHOOK_DEBUG) {
-          console.log(`📨 Processing ${event.type} event`);
-        }
+        console.log(`📨 Processing ${event.type} event`);
+
         const subscription = event.data.object as Stripe.Subscription;
         const customerId = subscription.customer as string;
 
