@@ -34,7 +34,7 @@ const CheckoutForm = ({ amount }: { amount: number }) => {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: "http://localhost:3000/checkout/success",
+        return_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success`,
       },
     });
 

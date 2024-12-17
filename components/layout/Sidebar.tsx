@@ -1,10 +1,9 @@
 "use client";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ArrowUpRight } from "lucide-react";
 import ProfileCard from "../dashboard/ProfileCard";
 import { RiHomeLine } from "react-icons/ri";
-import Link from "next/link";
+import { signOut } from "next-auth/react";
 import { modes } from "@/app/lib/content/modes";
 import {
   Accordion,
@@ -14,20 +13,28 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { useMode } from "@/store/useMode";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
   const { setSelectedMode } = useMode();
+
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    router.push("/");
+  };
 
   return (
     <aside className="flex flex-col gap-6 h-full px-3">
       <div className="flex w-full justify-between items-center h-[60px]">
         <span className="text-2xl font-semibold text-white">flui.ai</span>
-        <Link
-          href="/"
+        <button
+          onClick={handleSignOut}
           className="rounded-full p-2 bg-dark-gray hover:bg-gray-three"
         >
           <RiHomeLine className="text-gray-three hover:text-dark-gray" />
-        </Link>
+        </button>
       </div>
 
       {/* Updated Mode List with Accordion */}
