@@ -1,12 +1,12 @@
 "use client";
 
 import LoginSignupModal from "@/components/auth/LoginSignupModal";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-const LoginPage = () => {
+// Create a separate component for the modal content
+const LoginContent = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const buttonRef = useRef<HTMLButtonElement>(null);
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/#pricing";
@@ -21,7 +21,7 @@ const LoginPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <>
       {isLoading ? (
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-main-green" />
       ) : (
@@ -31,6 +31,21 @@ const LoginPage = () => {
           </button>
         </LoginSignupModal>
       )}
+    </>
+  );
+};
+
+// Main page component with Suspense boundary
+const LoginPage = () => {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <Suspense
+        fallback={
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-main-green" />
+        }
+      >
+        <LoginContent />
+      </Suspense>
     </div>
   );
 };
