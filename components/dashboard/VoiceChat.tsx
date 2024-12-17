@@ -88,7 +88,7 @@ const VoiceChat = () => {
     await wavRecorder.end();
 
     const wavStreamPlayer = wavStreamPlayerRef.current;
-    wavStreamPlayer.interrupt();
+    await wavStreamPlayer.interrupt();
   }, []);
 
   // Push to talk handlers
@@ -98,7 +98,7 @@ const VoiceChat = () => {
     const wavRecorder = wavRecorderRef.current;
     const wavStreamPlayer = wavStreamPlayerRef.current;
 
-    const trackSampleOffset = wavStreamPlayer.interrupt();
+    const trackSampleOffset = await wavStreamPlayer.interrupt();
     if (trackSampleOffset?.trackId) {
       const { trackId, offset } = trackSampleOffset;
       await client.cancelResponse(trackId, offset);
@@ -230,14 +230,7 @@ const VoiceChat = () => {
               >
                 {item.formatted.transcript ||
                   item.formatted.text ||
-                  (item.formatted.audio?.length ? "(processing...)" : "")}
-                {item.formatted.file && (
-                  <audio
-                    className="mt-2 w-full"
-                    src={item.formatted.file.url}
-                    controls
-                  />
-                )}
+                  (item.formatted.audio?.length ? "..." : "")}
               </div>
               <Button
                 variant="ghost"

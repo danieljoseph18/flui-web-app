@@ -21,3 +21,27 @@ export const SUPPORTED_LANGUAGES = [
   { name: "Brazilian", code: "brazilian" },
   { name: "Hebrew", code: "hebrew" },
 ] as const;
+
+export const BROWSER_TO_APP_LANG_CODES: Record<string, string> = {
+  en: "english",
+  es: "spanish",
+  fr: "french",
+  de: "german",
+  it: "italian",
+  pt: "portuguese",
+  zh: "chinese",
+  ja: "japanese",
+  ko: "korean",
+  ar: "arabic",
+  ru: "russian",
+  sv: "swedish",
+  th: "thai",
+  tr: "turkish",
+  uk: "ukrainian",
+  ur: "urdu",
+  hi: "hindi",
+  nl: "dutch",
+  pl: "polish",
+  "pt-BR": "brazilian",
+  he: "hebrew",
+};

@@ -13,9 +13,13 @@ import {
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useSettings, type SkillLevel } from "@/store/useSettings";
-import { SUPPORTED_LANGUAGES } from "@/lib/constants";
+import {
+  SUPPORTED_LANGUAGES,
+  BROWSER_TO_APP_LANG_CODES,
+} from "@/lib/constants";
 import { getFlagForLanguage } from "@/app/lib/supportedFlags";
 import Image from "next/image";
+import { useEffect } from "react";
 
 interface SettingsModalProps {
   open: boolean;
@@ -32,9 +36,23 @@ const SettingsModal = ({ open, onOpenChange }: SettingsModalProps) => {
     setSkillLevel,
   } = useSettings();
 
+  useEffect(() => {
+    if (!nativeLanguage) {
+      const browserLang = navigator.language;
+      const langCode = browserLang.split("-")[0].toLowerCase();
+
+      const appLangCode = BROWSER_TO_APP_LANG_CODES[langCode];
+      const isSupported = SUPPORTED_LANGUAGES.some(
+        (lang) => lang.code === appLangCode
+      );
+
+      setNativeLanguage(isSupported ? appLangCode : "english");
+    }
+  }, [nativeLanguage, setNativeLanguage]);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px] bg-dark-gray border border-gray-four text-white">
+      <DialogContent className="sm:max-w-[425px] bg-dark-gray border border-gray-four text-white">
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
         </DialogHeader>
@@ -66,7 +84,7 @@ const SettingsModal = ({ open, onOpenChange }: SettingsModalProps) => {
             </Select>
           </div>
           <div className="grid gap-2">
-            <label>Native Language</label>
+            <label>Native Language (Auto-detected)</label>
             <Select value={nativeLanguage} onValueChange={setNativeLanguage}>
               <SelectTrigger className="border border-gray-four">
                 <SelectValue placeholder="Select language" />
