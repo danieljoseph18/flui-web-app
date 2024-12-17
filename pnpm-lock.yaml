@@ -89,6 +89,9 @@ importers:
       next-auth:
         specifier: ^4.24.11
         version: 4.24.11(next@15.0.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      postcss:
+        specifier: ^8.4.49
+        version: 8.4.49
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -107,6 +110,9 @@ importers:
       tailwind-merge:
         specifier: ^2.5.5
         version: 2.5.5
+      tailwindcss:
+        specifier: ^3.4.16
+        version: 3.4.16
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.16)
@@ -129,12 +135,6 @@ importers:
       eslint-config-next:
         specifier: 15.0.4
         version: 15.0.4(eslint@8.57.1)(typescript@5.7.2)
-      postcss:
-        specifier: ^8
-        version: 8.4.49
-      tailwindcss:
-        specifier: ^3.4.1
-        version: 3.4.16
       typescript:
         specifier: ^5
         version: 5.7.2
