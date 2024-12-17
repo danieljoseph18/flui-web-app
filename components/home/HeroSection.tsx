@@ -1,9 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import LoginSignupModal from "@/components/auth/LoginSignupModal";
-import Link from "next/link";
-import Image from "next/image";
-import PlayIcon from "@/app/assets/play.svg";
 import { FaBoltLightning } from "react-icons/fa6";
 
 const HeroSection = () => {

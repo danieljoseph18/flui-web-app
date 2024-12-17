@@ -29,7 +29,7 @@ function mapSubscriptionStatus(stripeStatus: string): string {
   }
 }
 
-async function updateUserSubscription(
+const updateUserSubscription = async (
   stripeCustomerId: string,
   customerEmail: string,
   subscriptionData: {
@@ -38,7 +38,7 @@ async function updateUserSubscription(
     priceId?: string;
     currentPeriodEnd?: number;
   }
-) {
+) => {
   try {
     // First get the user by email
     const { data: users, error: userError } = await supabase
@@ -97,7 +97,7 @@ async function updateUserSubscription(
     console.error("Error in updateUserSubscription:", error);
     throw error;
   }
-}
+};
 
 export async function POST(request: NextRequest) {
   try {

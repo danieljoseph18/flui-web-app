@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
 import { Github, Mail } from "lucide-react";
+import Link from "next/link";
 
 interface ApiError {
   error?: string;
@@ -251,6 +252,15 @@ const LoginSignupModal = ({ children }: { children: React.ReactNode }) => {
             ? "Don't have an account? Sign up"
             : "Already have an account? Sign in"}
         </Button>
+
+        {isLogin && (
+          <Link
+            href="/reset-password"
+            className="text-sm text-center w-full text-gray-one hover:underline"
+          >
+            Forgot your password?
+          </Link>
+        )}
       </DialogContent>
     </Dialog>
   );

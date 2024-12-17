@@ -1,8 +1,8 @@
-import { Sidebar } from "@/components/layout/Sidebar";
+import Sidebar from "@/components/layout/Sidebar";
 import ChatInterface from "@/components/dashboard/ChatInterface";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
-export default function DashboardPage() {
+const DashboardPage = () => {
   return (
     <ProtectedRoute>
       <div className="flex h-screen bg-black py-3">
@@ -13,4 +13,6 @@ export default function DashboardPage() {
       </div>
     </ProtectedRoute>
   );
-}
+};
+
+export default DashboardPage;

@@ -1,11 +1,11 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ArrowUpRight } from "lucide-react";
-import { ProfileCard } from "../dashboard/ProfileCard";
+import ProfileCard from "../dashboard/ProfileCard";
 import { RiHomeLine } from "react-icons/ri";
 import Link from "next/link";
 import { scenarios } from "@/app/lib/content/scenarios";
 
-export const Sidebar = () => {
+const Sidebar = () => {
   return (
     <aside className="flex flex-col gap-6 h-full px-3">
       <div className="flex w-full justify-between items-center h-[60px]">
@@ -60,3 +60,5 @@ export const Sidebar = () => {
     </aside>
   );
 };
+
+export default Sidebar;

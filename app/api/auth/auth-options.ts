@@ -20,7 +20,7 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_KEY!
 );
 
-async function syncUserWithDatabase(user: any) {
+const syncUserWithDatabase = async (user: any) => {
   // Check if user exists in our database
   const { data: existingUser, error: selectError } = await supabase
     .from("users")
@@ -49,7 +49,7 @@ async function syncUserWithDatabase(user: any) {
       console.error("Error creating user record:", insertError);
     }
   }
-}
+};
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -73,6 +73,34 @@ export const authOptions: AuthOptions = {
         }
 
         try {
+          // Add a check for reset token
+          const resetToken = credentials.password.startsWith("RESET_")
+            ? credentials.password
+            : null;
+
+          if (resetToken) {
+            // Handle password reset flow
+            const {
+              data: { user },
+              error,
+            } = await supabase.auth.verifyOtp({
+              email: credentials.email,
+              token: resetToken.replace("RESET_", ""),
+              type: "recovery",
+            });
+
+            if (error) throw error;
+            if (!user) return null;
+
+            await syncUserWithDatabase(user);
+            return {
+              id: user.id,
+              email: user.email,
+              name: user.user_metadata?.name,
+            };
+          }
+
+          // Normal login flow
           const {
             data: { user },
             error,
@@ -84,9 +112,7 @@ export const authOptions: AuthOptions = {
           if (error) throw error;
           if (!user) return null;
 
-          // Sync user with our database
           await syncUserWithDatabase(user);
-
           return {
             id: user.id,
             email: user.email,

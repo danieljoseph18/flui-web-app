@@ -160,7 +160,7 @@ const VoiceChat = () => {
     return () => {
       client.reset();
     };
-  }, []);
+  }, [instructions]);
 
   return (
     <Card className="flex flex-col justify-between w-full h-full bg-transparent border-none shadow-none">

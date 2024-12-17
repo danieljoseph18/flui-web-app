@@ -11,7 +11,7 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-export default function PlansPage() {
+const PlansPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -57,4 +57,6 @@ export default function PlansPage() {
       </div>
     </div>
   );
-}
+};
+
+export default PlansPage;

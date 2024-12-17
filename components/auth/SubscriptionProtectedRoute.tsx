@@ -14,9 +14,9 @@ interface SubscriptionProtectedRouteProps {
   children: React.ReactNode;
 }
 
-export default function SubscriptionProtectedRoute({
+const SubscriptionProtectedRoute = ({
   children,
-}: SubscriptionProtectedRouteProps) {
+}: SubscriptionProtectedRouteProps) => {
   const { data: session, status } = useSession();
   const [hasSubscription, setHasSubscription] = useState<boolean | null>(null);
   const router = useRouter();
@@ -67,4 +67,6 @@ export default function SubscriptionProtectedRoute({
   }
 
   return hasSubscription ? children : null;
-}
+};
+
+export default SubscriptionProtectedRoute;

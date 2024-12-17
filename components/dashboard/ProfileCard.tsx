@@ -12,7 +12,7 @@ interface ProfileCardProps {
   avatar: string;
 }
 
-export const ProfileCard = ({ name, description }: ProfileCardProps) => {
+const ProfileCard = ({ name, description }: ProfileCardProps) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   return (
@@ -44,3 +44,5 @@ export const ProfileCard = ({ name, description }: ProfileCardProps) => {
     </div>
   );
 };
+
+export default ProfileCard;
