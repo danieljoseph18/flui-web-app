@@ -12,11 +12,11 @@ export const plans = [
     link:
       process.env.NODE_ENV === "development"
         ? "https://buy.stripe.com/test_7sI6s65Ja5bf4O4fYY"
-        : "",
+        : "https://buy.stripe.com/test_7sI6s65Ja5bf4O4fYY",
     priceId:
       process.env.NODE_ENV === "development"
         ? "price_1QUrItLl0sXgCLQErzYYSyan"
-        : "",
+        : "price_1QUrItLl0sXgCLQErzYYSyan",
   },
   {
     name: "Enthusiast",
@@ -32,11 +32,11 @@ export const plans = [
     link:
       process.env.NODE_ENV === "development"
         ? "https://buy.stripe.com/test_7sI6s65Ja5bf4O4fYY"
-        : "",
+        : "https://buy.stripe.com/test_7sI6s65Ja5bf4O4fYY",
     priceId:
       process.env.NODE_ENV === "development"
         ? "price_1QUrItLl0sXgCLQErzYYSyan"
-        : "",
+        : "price_1QUrItLl0sXgCLQErzYYSyan",
   },
   {
     name: "Fluency Fast-track",
@@ -52,10 +52,10 @@ export const plans = [
     link:
       process.env.NODE_ENV === "development"
         ? "https://buy.stripe.com/test_7sI6s65Ja5bf4O4fYY"
-        : "",
+        : "https://buy.stripe.com/test_7sI6s65Ja5bf4O4fYY",
     priceId:
       process.env.NODE_ENV === "development"
         ? "price_1QUrItLl0sXgCLQErzYYSyan"
-        : "",
+        : "price_1QUrItLl0sXgCLQErzYYSyan",
   },
 ];

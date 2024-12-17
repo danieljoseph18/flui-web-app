@@ -20,10 +20,18 @@ const PricingSection = ({ isModal = false }: PricingSectionProps) => {
       return;
     }
 
+    // Check if link is valid before redirecting
+    if (!link) {
+      console.error("No valid payment link found");
+      return;
+    }
+
     // Add email to Stripe checkout URL if available
     const checkoutUrl = session.user?.email
       ? `${link}?prefilled_email=${encodeURIComponent(session.user.email)}`
       : link;
+
+    console.log("Checkout URL: ", checkoutUrl);
 
     window.location.href = checkoutUrl;
   };
