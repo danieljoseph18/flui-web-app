@@ -4,7 +4,7 @@ interface TutorConfig {
   targetLanguage: string;
   nativeLanguage: string;
   skillLevel: LanguageLevel;
-  userName?: string;
+  mode: Mode["title"];
 }
 
 interface LanguageSpecifics {

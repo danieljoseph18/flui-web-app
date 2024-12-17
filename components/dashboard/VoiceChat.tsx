@@ -14,11 +14,15 @@ import FluiFrog from "@/app/assets/images/flui-frog.png";
 import { MoreVertical } from "lucide-react";
 import { useSettings } from "@/store/useSettings";
 import { useTutorInstructions } from "@/hooks/useTutorInstructions";
+import { useMode } from "@/store/useMode";
 
 const WS_BACKEND_URL =
-  process.env.NEXT_PUBLIC_WS_BACKEND_URL || "ws://localhost:8081";
+  `${process.env.NEXT_PUBLIC_WS_BACKEND_URL}/realtime` ||
+  "ws://localhost:8081/realtime";
 
 const VoiceChat = () => {
+  const { selectedMode } = useMode();
+
   // State for connection and recording status
   const [isConnected, setIsConnected] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
@@ -38,6 +42,7 @@ const VoiceChat = () => {
     targetLanguage,
     nativeLanguage,
     skillLevel,
+    mode: selectedMode ? selectedMode.title : "Story Mode",
   });
 
   // Connect to conversation
@@ -83,7 +88,7 @@ const VoiceChat = () => {
     await wavRecorder.end();
 
     const wavStreamPlayer = wavStreamPlayerRef.current;
-    await wavStreamPlayer.interrupt();
+    wavStreamPlayer.interrupt();
   }, []);
 
   // Push to talk handlers
@@ -93,7 +98,7 @@ const VoiceChat = () => {
     const wavRecorder = wavRecorderRef.current;
     const wavStreamPlayer = wavStreamPlayerRef.current;
 
-    const trackSampleOffset = await wavStreamPlayer.interrupt();
+    const trackSampleOffset = wavStreamPlayer.interrupt();
     if (trackSampleOffset?.trackId) {
       const { trackId, offset } = trackSampleOffset;
       await client.cancelResponse(trackId, offset);
@@ -162,8 +167,35 @@ const VoiceChat = () => {
     };
   }, [instructions]);
 
+  if (!selectedMode) {
+    return (
+      <Card className="flex flex-col justify-center items-center w-full h-full bg-transparent border-none shadow-none">
+        <CardContent className="text-center space-y-4">
+          <div className="rounded-full bg-gray-four p-6 w-fit mx-auto">
+            <Zap className="w-8 h-8 text-gray-three" />
+          </div>
+          <h3 className="text-xl font-semibold text-white">
+            Select a Mode to Start
+          </h3>
+          <p className="text-gray-three max-w-md">
+            Choose a learning mode from the sidebar to begin your language
+            learning journey with FLUI.
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className="flex flex-col justify-between w-full h-full bg-transparent border-none shadow-none">
+      <div className="p-4 border-b border-gray-four">
+        <div className="flex items-center gap-3">
+          <h2 className="text-lg font-semibold text-white">
+            {selectedMode.title}
+          </h2>
+        </div>
+      </div>
+
       <CardContent className="space-y-4">
         {/* Conversation Display */}
         <div className="h-[calc(100vh-200px)] overflow-y-auto space-y-4 p-4 rounded-md">

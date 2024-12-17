@@ -5,8 +5,8 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 const DashboardPage = () => {
   return (
     <ProtectedRoute>
-      <div className="flex h-screen bg-black py-3">
-        <div className="w-[35%] max-w-md">
+      <div className="flex flex-col gap-6 md:flex-row md:h-screen bg-black py-3">
+        <div className="w-full md:w-[35%]">
           <Sidebar />
         </div>
         <ChatInterface />

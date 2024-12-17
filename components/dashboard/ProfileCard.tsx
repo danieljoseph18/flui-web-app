@@ -1,15 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Equal } from "lucide-react";
+import { Settings } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import SettingsModal from "./SettingsModal";
+import "@/app/styles/profile-styles.css";
 
 interface ProfileCardProps {
   name: string;
   description: string;
-  avatar: string;
 }
 
 const ProfileCard = ({ name, description }: ProfileCardProps) => {
@@ -20,19 +20,19 @@ const ProfileCard = ({ name, description }: ProfileCardProps) => {
       <Button
         variant="ghost"
         size="icon"
-        className="absolute right-2 top-2 h-8 w-8 rounded-full bg-black/10"
+        className="absolute right-2 top-2 h-8 w-8 rounded-full bg-black/10 transition-transform hover:animate-spin"
         onClick={() => setSettingsOpen(true)}
       >
-        <Equal className="h-4 w-4" />
+        <Settings className="h-4 w-4" />
       </Button>
       <div className="mb-4 text-sm uppercase">Tutor</div>
       <div className="mb-4 flex justify-center">
         <Image
           src={"/images/common/flui-og-logo.png"}
           alt="Avatar"
-          className="w-42"
+          className="w-32"
           width={600}
-          height={400}
+          height={600}
         />
       </div>
       <div className="space-y-1">

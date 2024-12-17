@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { signIn } from "next-auth/react";
+import { useRef, useState, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,6 +25,7 @@ interface ApiError {
 }
 
 const LoginSignupModal = ({ children }: { children: React.ReactNode }) => {
+  const { data: session } = useSession();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,6 +34,16 @@ const LoginSignupModal = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const ref = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (session) {
+      router.replace("/dashboard");
+    }
+  }, [session, router]);
+
+  if (session) {
+    return null;
+  }
 
   const clearInputs = () => {
     setEmail("");

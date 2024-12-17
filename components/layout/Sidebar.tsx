@@ -1,11 +1,23 @@
+"use client";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ArrowUpRight } from "lucide-react";
 import ProfileCard from "../dashboard/ProfileCard";
 import { RiHomeLine } from "react-icons/ri";
 import Link from "next/link";
-import { scenarios } from "@/app/lib/content/scenarios";
+import { modes } from "@/app/lib/content/modes";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { useMode } from "@/store/useMode";
 
 const Sidebar = () => {
+  const { setSelectedMode } = useMode();
+
   return (
     <aside className="flex flex-col gap-6 h-full px-3">
       <div className="flex w-full justify-between items-center h-[60px]">
@@ -18,44 +30,51 @@ const Sidebar = () => {
         </Link>
       </div>
 
-      {/* Scenarios List */}
-
+      {/* Updated Mode List with Accordion */}
       <div className="flex flex-col gap-2 rounded-3xl bg-dark-gray p-4 overflow-hidden">
-        <div className="flex items-center justify-between w-full py-2">
-          <span className="text-sm font-semibold uppercase text-gray-three">
-            Scenarios
-          </span>
-          <Link
-            href="/"
-            className="rounded-full p-2 bg-dark-gray-two hover:bg-gray-three"
-          >
-            <ArrowUpRight className="text-gray-three hover:text-dark-gray" />
-          </Link>
-        </div>
+        <p className="text-sm font-semibold uppercase text-gray-three">Modes</p>
+
         <ScrollArea className="flex-grow">
-          <div className="w-full">
-            {scenarios.map((scenario) => (
-              <Link href="#" key={scenario.title} className="">
-                <div className="flex flex-col py-2 gap-1 bg-dark-gray-two hover:bg-gray-four rounded-3xl px-4 mb-1">
-                  <div className="text-lg text-white font-semibold">
-                    {scenario.title}
+          <Accordion type="single" collapsible className="w-full">
+            {modes.map((mode) => (
+              <AccordionItem
+                key={mode.title}
+                value={mode.title}
+                className="border-none mb-1"
+              >
+                <AccordionTrigger className="hover:no-underline py-2 px-4 bg-dark-gray-two hover:bg-gray-four rounded-3xl">
+                  <div className="flex items-center gap-3">
+                    {mode.icon && (
+                      <span className="text-white text-xl">{mode.icon}</span>
+                    )}
+                    <span className="text-lg text-white font-semibold">
+                      {mode.title}
+                    </span>
                   </div>
-                  <div className="text-sm text-gray-three">
-                    {scenario.description}
+                </AccordionTrigger>
+                <AccordionContent className="px-4 pt-2">
+                  <div className="text-sm text-gray-three mb-3">
+                    {mode.description}
                   </div>
-                </div>
-              </Link>
+                  <Button
+                    className="w-full bg-primary hover:bg-main-green transition-all duration-300"
+                    onClick={() => {
+                      setSelectedMode(mode);
+                    }}
+                  >
+                    Start Mode
+                  </Button>
+                </AccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+          </Accordion>
         </ScrollArea>
       </div>
 
       {/* Profile Card */}
-
       <ProfileCard
         name="FLUI"
         description="I'm your language learning tutor! With me, we'll get you speaking fluently in no time!"
-        avatar="/placeholder.svg?height=128&width=128"
       />
     </aside>
   );
