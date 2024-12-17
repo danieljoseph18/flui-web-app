@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
+import LoadingScreen from "../common/LoadingScreen";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -63,7 +64,7 @@ const SubscriptionProtectedRoute = ({
   }, [session?.user?.email, status, router]);
 
   if (status === "loading" || hasSubscription === null) {
-    return <div>Loading...</div>;
+    return <LoadingScreen loadingPercentage={100} />;
   }
 
   return hasSubscription ? children : null;
