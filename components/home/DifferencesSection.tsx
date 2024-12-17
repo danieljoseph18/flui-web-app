@@ -14,6 +14,7 @@ import { features } from "@/app/lib/content/features";
 import { FaBoltLightning } from "react-icons/fa6";
 import { MdSwipeRight } from "react-icons/md";
 import "@/app/styles/swipe-animation.css";
+import LoginSignupModal from "../auth/LoginSignupModal";
 
 const DifferenceCard = ({
   icon: Icon,
@@ -121,10 +122,12 @@ const DifferencesSection = () => {
       </div>
 
       <div className="text-center mt-8">
-        <Button className="bg-main-green text-white hover:bg-green-hover rounded-md">
-          <FaBoltLightning size={16} />
-          Get Started
-        </Button>
+        <LoginSignupModal>
+          <Button className="bg-main-green text-white hover:bg-green-hover rounded-md">
+            <FaBoltLightning size={16} />
+            Get Started
+          </Button>
+        </LoginSignupModal>
       </div>
     </section>
   );

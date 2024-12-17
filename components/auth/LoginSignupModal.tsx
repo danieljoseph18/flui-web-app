@@ -24,7 +24,12 @@ interface ApiError {
   details?: string;
 }
 
-const LoginSignupModal = ({ children }: { children: React.ReactNode }) => {
+interface LoginSignupModalProps {
+  children: React.ReactNode;
+  callbackUrl?: string;
+}
+
+const LoginSignupModal = ({ children, callbackUrl }: LoginSignupModalProps) => {
   const { data: session } = useSession();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
@@ -37,9 +42,9 @@ const LoginSignupModal = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (session) {
-      router.replace("/dashboard");
+      router.replace(callbackUrl || "/dashboard");
     }
-  }, [session, router]);
+  }, [session, router, callbackUrl]);
 
   if (session) {
     return null;
@@ -56,7 +61,8 @@ const LoginSignupModal = ({ children }: { children: React.ReactNode }) => {
     try {
       setIsLoading(true);
       await signIn(provider, {
-        callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
+        callbackUrl:
+          callbackUrl || `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
         redirect: true,
       });
     } catch (error) {
@@ -96,7 +102,7 @@ const LoginSignupModal = ({ children }: { children: React.ReactNode }) => {
           return;
         }
 
-        router.replace("/dashboard");
+        router.replace(callbackUrl || "/dashboard");
       } else {
         const response = await fetch("/api/auth/signup", {
           method: "POST",
