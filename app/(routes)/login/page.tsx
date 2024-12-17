@@ -8,13 +8,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Github, Mail } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/app/hooks/useAuth";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
+import LoadingScreen from "@/components/common/LoadingScreen";
 
-const LoginContent = () => {
-  const { data: session } = useSession();
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/#pricing";
+  const callbackUrl = searchParams.get("callbackUrl") ?? undefined;
+  const { data: session } = useSession();
 
   const {
     isLogin,
@@ -32,8 +33,13 @@ const LoginContent = () => {
     getErrorMessage,
   } = useAuth(callbackUrl);
 
+  useEffect(() => {
+    if (session) {
+      router.replace(callbackUrl || "/dashboard");
+    }
+  }, [session, router, callbackUrl]);
+
   if (session) {
-    router.replace(callbackUrl || "/dashboard");
     return null;
   }
 
@@ -140,11 +146,11 @@ const LoginContent = () => {
       )}
     </div>
   );
-};
+}
 
 const LoginPage = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingScreen loadingPercentage={100} />}>
       <div className="min-h-screen flex items-center justify-center p-4 bg-subtle-gray">
         <LoginContent />
       </div>

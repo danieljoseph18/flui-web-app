@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { createClient } from "@supabase/supabase-js";
+import LoadingScreen from "../common/LoadingScreen";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -174,13 +175,7 @@ const ResetPasswordFormContent = () => {
 // Create a wrapper component that includes Suspense
 const ResetPasswordForm = () => {
   return (
-    <Suspense
-      fallback={
-        <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-          <p>Loading...</p>
-        </div>
-      }
-    >
+    <Suspense fallback={<LoadingScreen loadingPercentage={100} />}>
       <ResetPasswordFormContent />
     </Suspense>
   );
