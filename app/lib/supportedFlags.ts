@@ -7,7 +7,7 @@ export const supportedFlags: {
     flag: "/images/flags/british-flag.png",
   },
   {
-    name: "Chinese",
+    name: "Mandarin",
     flag: "/images/flags/chinese-flag.png",
   },
   {
@@ -19,7 +19,7 @@ export const supportedFlags: {
     flag: "/images/flags/germany-flag.png",
   },
   {
-    name: "Indian",
+    name: "Hindi",
     flag: "/images/flags/indian-flag.png",
   },
   {
@@ -35,7 +35,7 @@ export const supportedFlags: {
     flag: "/images/flags/korean-flag.png",
   },
   {
-    name: "Pakistani",
+    name: "Urdu",
     flag: "/images/flags/pakistani-flag.png",
   },
   {
@@ -67,12 +67,32 @@ export const supportedFlags: {
     flag: "/images/flags/uae-flag.png",
   },
   {
-    name: "Ukraine",
+    name: "Ukrainian",
     flag: "/images/flags/ukraine-flag.png",
   },
   {
     name: "United States",
     flag: "/images/flags/usa-flag.png",
+  },
+  {
+    name: "Arabic",
+    flag: "/images/flags/saudi-flag.png",
+  },
+  {
+    name: "Dutch",
+    flag: "/images/flags/netherlands-flag.png",
+  },
+  {
+    name: "Polish",
+    flag: "/images/flags/polish-flag.png",
+  },
+  {
+    name: "Brazilian",
+    flag: "/images/flags/brazil-flag.png",
+  },
+  {
+    name: "Hebrew",
+    flag: "/images/flags/israel-flag.png",
   },
 ];
 
