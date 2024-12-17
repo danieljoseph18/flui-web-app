@@ -121,10 +121,10 @@ importers:
         version: 5.0.2(@types/react@19.0.1)(react@19.0.0)
     devDependencies:
       '@types/node':
-        specifier: ^20
+        specifier: ^20.17.9
         version: 20.17.9
       '@types/react':
-        specifier: ^19
+        specifier: ^19.0.1
         version: 19.0.1
       '@types/react-dom':
         specifier: ^19
@@ -136,7 +136,7 @@ importers:
         specifier: 15.0.4
         version: 15.0.4(eslint@8.57.1)(typescript@5.7.2)
       typescript:
-        specifier: ^5
+        specifier: ^5.7.2
         version: 5.7.2
 
 packages:
