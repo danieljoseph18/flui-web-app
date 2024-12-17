@@ -44,7 +44,10 @@ const LoginSignupModal = ({ children }: { children: React.ReactNode }) => {
   const handleSocialLogin = async (provider: string) => {
     try {
       setIsLoading(true);
-      await signIn(provider, { callbackUrl: "/dashboard" });
+      await signIn(provider, {
+        callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
+        redirect: true,
+      });
     } catch (error) {
       console.error(`Error signing in with ${provider}:`, error);
     } finally {
@@ -82,7 +85,7 @@ const LoginSignupModal = ({ children }: { children: React.ReactNode }) => {
           return;
         }
 
-        router.push("/dashboard");
+        router.replace("/dashboard");
       } else {
         const response = await fetch("/api/auth/signup", {
           method: "POST",
