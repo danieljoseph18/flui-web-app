@@ -28,7 +28,7 @@ const ProfileCard = ({ name, description }: ProfileCardProps) => {
       <div className="mb-4 text-sm uppercase">Tutor</div>
       <div className="mb-4 flex justify-center">
         <Image
-          src={"/images/common/flui-og-logo.png"}
+          src={"/images/common/flui-frog.png"}
           alt="Avatar"
           className="w-32"
           width={600}

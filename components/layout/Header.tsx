@@ -27,7 +27,7 @@ const Header = () => {
         <div className="flex gap-6 md:gap-10">
           <Link href="/" className="flex items-center space-x-2">
             <Image
-              src={"/images/common/flui-og-logo.png"}
+              src={"/images/common/flui-icon.png"}
               alt="Flui Logo"
               width={100}
               height={100}
