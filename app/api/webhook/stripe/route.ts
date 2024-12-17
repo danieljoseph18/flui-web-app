@@ -32,6 +32,15 @@ function mapSubscriptionStatus(stripeStatus: string): string {
   }
 }
 
+// At the top of the file, after creating the supabase client
+// Add environment variable validation
+if (
+  !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+  !process.env.SUPABASE_SERVICE_KEY
+) {
+  console.error("❌ Missing required Supabase environment variables");
+}
+
 const updateUserSubscription = async (
   stripeCustomerId: string,
   customerEmail: string,
@@ -47,18 +56,25 @@ const updateUserSubscription = async (
       customerEmail,
       stripeCustomerId,
       subscriptionStatus: subscriptionData.status,
+      supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL?.slice(0, 10) + "...", // Log partial URL for debugging
     });
   }
 
   try {
-    // Verify database connection first
+    // Modify the health check to include more detailed error information
     const { data: healthCheck, error: healthError } = await supabase
       .from("users")
-      .select("count(*)", { count: "exact", head: true });
+      .select("count(*)", { count: "exact", head: true })
+      .limit(1);
 
     if (healthError) {
-      console.error("❌ Database connection error:", healthError);
-      throw new Error("Database connection failed");
+      console.error("❌ Database connection error:", {
+        message: healthError.message,
+        details: healthError.details,
+        hint: healthError.hint,
+        code: healthError.code,
+      });
+      throw new Error(`Database connection failed: ${healthError.message}`);
     }
 
     // First get the user by email
@@ -120,9 +136,28 @@ const updateUserSubscription = async (
   }
 };
 
+async function testDatabaseConnection() {
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .select("count(*)", { count: "exact", head: true });
+    if (error) throw error;
+    console.log("✅ Database connection successful");
+    return true;
+  } catch (error) {
+    console.error("❌ Database connection test failed:", {
+      error,
+      supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL?.slice(0, 10) + "...",
+      hasServiceKey: !!process.env.SUPABASE_SERVICE_KEY,
+    });
+    return false;
+  }
+}
+
 export async function POST(request: NextRequest) {
   if (WEBHOOK_DEBUG) {
     console.log("🎯 Webhook endpoint hit");
+    await testDatabaseConnection();
   }
 
   try {
