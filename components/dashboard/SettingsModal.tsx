@@ -13,10 +13,7 @@ import {
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useSettings, type SkillLevel } from "@/store/useSettings";
-import {
-  SUPPORTED_LANGUAGES,
-  BROWSER_TO_APP_LANG_CODES,
-} from "@/lib/constants";
+import { SUPPORTED_LANGUAGES } from "@/lib/constants";
 import { getFlagForLanguage } from "@/app/lib/supportedFlags";
 import Image from "next/image";
 

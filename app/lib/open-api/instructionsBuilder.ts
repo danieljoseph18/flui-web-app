@@ -62,6 +62,7 @@ export class TutorInstructionsBuilder {
         3. Show enthusiasm and patience
         4. Provide corrections appropriate for ${this.config.skillLevel} level
         5. Focus on maintaining engaging conversation flow
+        6. Always give the student a prompt or question to respond to
 
         Session Structure:
         1. Start with a warm greeting and small talk

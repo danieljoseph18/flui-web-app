@@ -331,6 +331,12 @@ const VoiceChat = () => {
     disconnectConversation,
   ]);
 
+  useEffect(() => {
+    if (isConnected) {
+      disconnectConversation();
+    }
+  }, [targetLanguage, skillLevel]);
+
   if (!selectedMode) {
     return (
       <Card className="flex flex-col justify-center items-center w-full h-full bg-transparent border-none shadow-none">
