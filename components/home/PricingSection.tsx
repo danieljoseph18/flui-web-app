@@ -71,9 +71,9 @@ const PricingSection = ({ isModal = false }: PricingSectionProps) => {
             <div className="flex flex-col gap-4">
               <h3 className="text-2xl font-bold">{plan.name}</h3>
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-bold">${plan.price}</span>
+                <span className="text-3xl font-bold">£{plan.price}</span>
                 <span className="text-gray-one line-through text-lg ml-2">
-                  ${plan.originalPrice}
+                  £{plan.originalPrice}
                 </span>
                 <span className="text-gray-one">/month</span>
               </div>

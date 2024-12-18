@@ -6,17 +6,17 @@ export const plans = [
     description: "Perfect for casual learners",
     features: [
       "60 minutes of lessons per month",
-      "Additional minutes: $0.50/minute",
+      "Additional minutes: £0.50/minute",
       "Basic Email support",
     ],
     link:
       process.env.NODE_ENV === "development"
         ? "https://buy.stripe.com/test_7sI6s65Ja5bf4O4fYY"
-        : "https://buy.stripe.com/test_7sI6s65Ja5bf4O4fYY",
+        : "https://buy.stripe.com/6oE14G5hAdMc1Ik3cc",
     priceId:
       process.env.NODE_ENV === "development"
         ? "price_1QUrItLl0sXgCLQErzYYSyan"
-        : "price_1QUrItLl0sXgCLQErzYYSyan",
+        : "price_1QXH1cLl0sXgCLQEY0qpU6jM",
   },
   {
     name: "Enthusiast",
@@ -26,36 +26,36 @@ export const plans = [
     featured: true,
     features: [
       "180 minutes/month",
-      "Additional minutes: $0.40/minute",
+      "Additional minutes: £0.40/minute",
       "Priority support",
     ],
     link:
       process.env.NODE_ENV === "development"
-        ? "https://buy.stripe.com/test_7sI6s65Ja5bf4O4fYY"
-        : "https://buy.stripe.com/test_7sI6s65Ja5bf4O4fYY",
+        ? "https://buy.stripe.com/test_eVa17M6Ne8nrbcs3cd"
+        : "https://buy.stripe.com/4gwaFgbFY6jK9aMbIJ",
     priceId:
       process.env.NODE_ENV === "development"
-        ? "price_1QUrItLl0sXgCLQErzYYSyan"
-        : "price_1QUrItLl0sXgCLQErzYYSyan",
+        ? "price_1QXGmLLl0sXgCLQEfixrkeQ3"
+        : "price_1QXH1eLl0sXgCLQETcdojBCr",
   },
   {
-    name: "Fluency Fast-track",
-    price: "149.99",
-    originalPrice: "249.99",
+    name: "Flui Fast-track",
+    price: "99.99",
+    originalPrice: "199.99",
     description: "Best to become fluent ASAP",
     features: [
       "500 minutes/month",
-      "Additional minutes: $0.30/minute",
+      "Additional minutes: £0.30/minute",
       "Priority support",
       "Custom Feature Requests",
     ],
     link:
       process.env.NODE_ENV === "development"
-        ? "https://buy.stripe.com/test_7sI6s65Ja5bf4O4fYY"
-        : "https://buy.stripe.com/test_7sI6s65Ja5bf4O4fYY",
+        ? "https://buy.stripe.com/test_bIYcQugnOgTXgwMfZ0"
+        : "https://buy.stripe.com/14k5kW39sgYo0Eg8wy",
     priceId:
       process.env.NODE_ENV === "development"
-        ? "price_1QUrItLl0sXgCLQErzYYSyan"
-        : "price_1QUrItLl0sXgCLQErzYYSyan",
+        ? "price_1QXGrXLl0sXgCLQEuqzu0JUM"
+        : "price_1QXH1gLl0sXgCLQEBDe94FBS",
   },
 ];
