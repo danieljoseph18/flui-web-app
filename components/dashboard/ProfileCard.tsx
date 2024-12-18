@@ -25,24 +25,29 @@ const ProfileCard = ({ name, description }: ProfileCardProps) => {
 
   return (
     <div className="relative rounded-3xl bg-pastel-yellow p-6 text-brownish-yellow">
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute right-2 top-2 h-8 w-8 rounded-full bg-black/10 transition-transform hover:scale-110 p-1"
-        onClick={() => setSettingsOpen(true)}
-      >
-        <Image
-          src={
-            getFlagForLanguage(currentLanguage || "") ||
-            "/images/flags/british-flag.png"
-          }
-          alt="Language flag"
-          width={24}
-          height={24}
-          className="rounded-sm object-cover"
-        />
-      </Button>
-      <div className="mb-4 text-sm uppercase">Tutor</div>
+      <div className="flex w-full items-center justify-between">
+        <div className="text-sm uppercase">Tutor</div>
+        <div className="flex items-center gap-2">
+          <p className="text-sm">Settings</p>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 transition-transform hover:scale-110 p-1"
+            onClick={() => setSettingsOpen(true)}
+          >
+            <Image
+              src={
+                getFlagForLanguage(currentLanguage || "") ||
+                "/images/flags/british-flag.png"
+              }
+              alt="Language flag"
+              width={24}
+              height={24}
+              className="rounded-sm object-cover"
+            />
+          </Button>
+        </div>
+      </div>
       <div className="mb-4 flex justify-center">
         <Image
           src={"/images/common/flui-frog.png"}

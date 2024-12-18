@@ -17,7 +17,7 @@ export const modes: Mode[] = [
   {
     title: "Challenge Mode",
     description:
-      "Put your new-found language skills to the test. Face a variety of challenges including translations, grammar exercises, and conversational responses. Perfect for measuring your progress and reinforcing your learning.",
+      "Put your language skills to the test. Face a variety of challenges including translations, grammar exercises, and conversational responses. Perfect for measuring your progress and reinforcing your learning.",
     icon: <Brain className="w-5 h-5" />,
   },
 ];

@@ -28,7 +28,9 @@ const Sidebar = () => {
   return (
     <aside className="flex flex-col gap-6 h-full px-3">
       <div className="flex w-full justify-between items-center h-[60px]">
-        <span className="text-2xl font-semibold text-white">flui.ai</span>
+        <span className="text-2xl font-semibold text-white uppercase">
+          flui.ai
+        </span>
         <button
           onClick={handleSignOut}
           className="rounded-full p-2 bg-dark-gray hover:bg-gray-three"
