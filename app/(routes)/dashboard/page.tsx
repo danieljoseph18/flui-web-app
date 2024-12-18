@@ -10,7 +10,6 @@ const DashboardPage = () => {
   const chatRef = useRef<HTMLDivElement>(null);
   const { selectedMode } = useMode();
 
-  // Effect to handle scrolling when mode is selected
   useEffect(() => {
     if (selectedMode && window.innerWidth < 768) {
       chatRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -23,9 +22,7 @@ const DashboardPage = () => {
         <div className="w-full md:w-[35%]">
           <Sidebar />
         </div>
-        <div ref={chatRef}>
-          <ChatInterface />
-        </div>
+        <ChatInterface ref={chatRef} />
       </div>
     </ProtectedRoute>
   );
