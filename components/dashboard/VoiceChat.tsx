@@ -23,6 +23,10 @@ import {
 } from "@/components/ui/tooltip";
 import Image from "next/image";
 import FluiTrace from "@/app/assets/images/flui-trace.png";
+import { useSession } from "next-auth/react";
+import { createClient } from "@supabase/supabase-js";
+import { getSecondsLimit } from "@/app/lib/pricing";
+import { toast } from "react-hot-toast";
 
 const WS_BACKEND_URL =
   `${process.env.NEXT_PUBLIC_WS_BACKEND_URL}/realtime` ||
@@ -30,6 +34,57 @@ const WS_BACKEND_URL =
 
 const VoiceChat = () => {
   const { selectedMode } = useMode();
+  const { data: session } = useSession();
+  const [secondsUsed, setSecondsUsed] = useState<number>(0);
+  const [secondsLimit, setSecondsLimit] = useState<number>(0);
+
+  const sessionEndedRef = useRef(false);
+
+  // Initialize Supabase client
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+
+  // Fetch user's usage data
+  useEffect(() => {
+    const fetchUsageData = async () => {
+      if (!session?.user?.email) return;
+
+      const { data: userData, error } = await supabase
+        .from("users")
+        .select("seconds_used, subscription_price_id")
+        .eq("email", session.user.email)
+        .single();
+
+      if (error) {
+        console.error("Error fetching usage data:", error);
+        return;
+      }
+
+      setSecondsUsed(userData.seconds_used || 0);
+      setSecondsLimit(getSecondsLimit(userData.subscription_price_id));
+    };
+
+    fetchUsageData();
+  }, [session]);
+
+  // Function to update seconds used
+  const updateSecondsUsed = async (additionalSeconds: number) => {
+    if (!session?.user?.email) return;
+
+    const { error } = await supabase
+      .from("users")
+      .update({ seconds_used: secondsUsed + additionalSeconds })
+      .eq("email", session.user.email);
+
+    if (error) {
+      console.error("Error updating seconds used:", error);
+      // continue regardless
+    }
+
+    setSecondsUsed((prev) => prev + additionalSeconds);
+  };
 
   // State for connection and recording status
   const [isConnected, setIsConnected] = useState(false);
@@ -56,8 +111,31 @@ const VoiceChat = () => {
   // Add this ref near your other refs
   const conversationRef = useRef<HTMLDivElement>(null);
 
+  // Add this with the other refs
+  const sessionStartTimeRef = useRef<number>(0);
+
+  // Add this near your other state variables
+  const [isMonitoring, setIsMonitoring] = useState(false);
+
+  // Modify all time calculations in the component to use this helper function
+  const calculateSeconds = (startTime: number): number => {
+    const milliseconds = performance.now() - startTime;
+    const seconds = Math.floor(milliseconds / 1000);
+    return seconds;
+  };
+
   // Connect to conversation
   const connectConversation = useCallback(async () => {
+    if (secondsUsed >= secondsLimit) {
+      toast.error(
+        "You've reached your monthly minutes limit. Please upgrade your plan to continue."
+      );
+      return;
+    }
+
+    // Set the session start time (use precise timestamp)
+    sessionStartTimeRef.current = performance.now();
+
     const client = clientRef.current;
     const wavRecorder = wavRecorderRef.current;
     const wavStreamPlayer = wavStreamPlayerRef.current;
@@ -85,21 +163,32 @@ const VoiceChat = () => {
     if (useVAD) {
       await wavRecorder.record((data) => client.appendInputAudio(data.mono));
     }
-  }, [useVAD]);
+
+    // Start usage monitoring
+    setIsMonitoring(true);
+  }, [useVAD, secondsUsed, secondsLimit]);
 
   // Disconnect conversation
   const disconnectConversation = useCallback(async () => {
-    setIsConnected(false);
+    setIsMonitoring(false);
 
     const client = clientRef.current;
-    client.disconnect();
-
     const wavRecorder = wavRecorderRef.current;
-    await wavRecorder.end();
-
     const wavStreamPlayer = wavStreamPlayerRef.current;
+
+    // Stop the session first
+    client.disconnect();
+    await wavRecorder.end();
     await wavStreamPlayer.interrupt();
-  }, []);
+
+    // Now update seconds used
+    const seconds = calculateSeconds(sessionStartTimeRef.current);
+    await updateSecondsUsed(seconds);
+
+    // Mark session ended and disconnected
+    sessionEndedRef.current = true;
+    setIsConnected(false);
+  }, [updateSecondsUsed]);
 
   // Push to talk handlers
   const startRecording = async () => {
@@ -184,6 +273,65 @@ const VoiceChat = () => {
     }
   }, [items]); // Scroll when items change
 
+  /**
+   * @dev Crucial: Updates seconds used when page is unloaded to prevent malicious
+   * users from trying to refresh without them registering.
+   */
+  useEffect(() => {
+    const handleBeforeUnload = async () => {
+      if (
+        !sessionEndedRef.current &&
+        isConnected &&
+        sessionStartTimeRef.current
+      ) {
+        const seconds = calculateSeconds(sessionStartTimeRef.current);
+
+        const formData = new FormData();
+        formData.append("email", session?.user?.email || "");
+        formData.append("seconds", seconds.toString());
+
+        navigator.sendBeacon("/api/usage/update", formData);
+      }
+    };
+
+    // Add event listener
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isConnected, session?.user?.email, updateSecondsUsed]);
+
+  // Add a monitoring effect
+  useEffect(() => {
+    let monitoringInterval: NodeJS.Timeout;
+
+    if (isConnected && isMonitoring) {
+      monitoringInterval = setInterval(() => {
+        const currentMinutes = calculateSeconds(sessionStartTimeRef.current);
+        const totalMinutes = secondsUsed + currentMinutes;
+
+        if (totalMinutes >= secondsLimit) {
+          toast.error("Monthly minutes limit reached. Session ended.");
+          disconnectConversation();
+        }
+      }, 5000);
+    }
+
+    return () => {
+      if (monitoringInterval) {
+        clearInterval(monitoringInterval);
+      }
+    };
+  }, [
+    isConnected,
+    isMonitoring,
+    secondsUsed,
+    secondsLimit,
+    disconnectConversation,
+  ]);
+
   if (!selectedMode) {
     return (
       <Card className="flex flex-col justify-center items-center w-full h-full bg-transparent border-none shadow-none">
@@ -206,10 +354,14 @@ const VoiceChat = () => {
   return (
     <Card className="flex flex-col justify-between w-full h-full bg-transparent border-none shadow-none">
       <div className="p-4 border-b border-gray-four">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-white">
             {selectedMode.title}
           </h2>
+          <div className="text-sm text-gray-three">
+            {Math.floor(secondsUsed / 60)} / {Math.floor(secondsLimit / 60)}{" "}
+            minutes used
+          </div>
         </div>
       </div>
 

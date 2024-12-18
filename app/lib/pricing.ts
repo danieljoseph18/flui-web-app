@@ -59,3 +59,16 @@ export const plans = [
         : "price_1QXH1gLl0sXgCLQEBDe94FBS",
   },
 ];
+
+export function getSecondsLimit(priceId: string | null): number {
+  const plan = plans.find((p) => p.priceId === priceId);
+  if (!plan) return 0;
+
+  // Extract minutes from the features array
+  const minutesFeature = plan.features.find((f) => f.includes("minutes"));
+  if (!minutesFeature) return 0;
+
+  // Parse the number from strings like "60 minutes/month" or "180 minutes/month"
+  const minutes = parseInt(minutesFeature.match(/\d+/)?.[0] || "0");
+  return minutes * 60;
+}

@@ -95,6 +95,10 @@ const updateUserSubscription = async (
         subscription_current_period_end: subscriptionData.currentPeriodEnd
           ? new Date(subscriptionData.currentPeriodEnd * 1000).toISOString()
           : null,
+        minutes_used: 0,
+        minutes_reset_date: subscriptionData.currentPeriodEnd
+          ? new Date(subscriptionData.currentPeriodEnd * 1000).toISOString()
+          : null,
       })
       .eq("id", user.id);
 
