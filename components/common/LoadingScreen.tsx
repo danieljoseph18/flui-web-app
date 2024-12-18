@@ -7,7 +7,7 @@ const LoadingScreen = ({
   loadingPercentage: number;
 }) => {
   return (
-    <div className="flex flex-col gap-4 items-center justify-center w-full h-full">
+    <div className="flex flex-col gap-4 items-center justify-center w-full h-full min-h-screen">
       <Image
         src={"/images/common/flui-frog.png"}
         alt="Flui the Frog"

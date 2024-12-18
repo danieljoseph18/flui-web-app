@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Mic, X, Zap } from "lucide-react";
+import { Mic, X, Zap, HelpCircle } from "lucide-react";
 import { ItemType } from "@openai/realtime-api-beta/dist/lib/client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import FluiFrog from "@/app/assets/images/flui-frog.png";
@@ -15,6 +15,14 @@ import { MoreVertical } from "lucide-react";
 import { useSettings } from "@/store/useSettings";
 import { useTutorInstructions } from "@/hooks/useTutorInstructions";
 import { useMode } from "@/store/useMode";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import Image from "next/image";
+import FluiTrace from "@/app/assets/images/flui-trace.png";
 
 const WS_BACKEND_URL =
   `${process.env.NEXT_PUBLIC_WS_BACKEND_URL}/realtime` ||
@@ -44,6 +52,9 @@ const VoiceChat = () => {
     skillLevel,
     mode: selectedMode ? selectedMode.title : "Story Mode",
   });
+
+  // Add this ref near your other refs
+  const conversationRef = useRef<HTMLDivElement>(null);
 
   // Connect to conversation
   const connectConversation = useCallback(async () => {
@@ -79,7 +90,6 @@ const VoiceChat = () => {
   // Disconnect conversation
   const disconnectConversation = useCallback(async () => {
     setIsConnected(false);
-    setItems([]);
 
     const client = clientRef.current;
     client.disconnect();
@@ -167,6 +177,13 @@ const VoiceChat = () => {
     };
   }, [instructions]);
 
+  // Add this effect to handle auto-scrolling
+  useEffect(() => {
+    if (conversationRef.current) {
+      conversationRef.current.scrollTop = conversationRef.current.scrollHeight;
+    }
+  }, [items]); // Scroll when items change
+
   if (!selectedMode) {
     return (
       <Card className="flex flex-col justify-center items-center w-full h-full bg-transparent border-none shadow-none">
@@ -198,49 +215,63 @@ const VoiceChat = () => {
 
       <CardContent className="space-y-4">
         {/* Conversation Display */}
-        <div className="h-[calc(100vh-200px)] overflow-y-auto space-y-4 p-4 rounded-md">
-          {items.map((item: any) => (
-            <div
-              key={item.id}
-              className={`group relative flex gap-3 ${
-                item.role === "user" ? "justify-end" : ""
-              }`}
-            >
-              {item.role === "assistant" && (
-                <div className="flex flex-col !min-h-full justify-end">
-                  <Avatar className="h-8 w-8 bg-gray-four">
-                    <AvatarImage src={FluiFrog.src} />
-                    <AvatarFallback>AI</AvatarFallback>
-                  </Avatar>
-                </div>
-              )}
-              {item.role === "user" && (
-                <div className="flex flex-col !min-h-full justify-end order-last">
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback>You</AvatarFallback>
-                  </Avatar>
-                </div>
-              )}
+        <div
+          ref={conversationRef}
+          className="h-[calc(100vh-200px)] overflow-y-auto space-y-4 p-4 rounded-md"
+        >
+          {items.length === 0 ? (
+            <div className="h-full flex flex-col items-center justify-center">
+              <Image
+                src={FluiTrace}
+                alt="Start conversation"
+                className="w-32 mb-4"
+              />
+              <p className="text-gray-three text-lg">Start a Conversation</p>
+            </div>
+          ) : (
+            items.map((item: any) => (
               <div
-                className={`relative max-w-[85%] px-3 py-2 text-sm ${
-                  item.role === "user"
-                    ? "bg-pastel-blue rounded-xl rounded-br-md"
-                    : "bg-gray-four text-gray-three rounded-xl rounded-bl-md"
+                key={item.id}
+                className={`group relative flex gap-3 ${
+                  item.role === "user" ? "justify-end" : ""
                 }`}
               >
-                {item.formatted.transcript ||
-                  item.formatted.text ||
-                  (item.formatted.audio?.length ? "..." : "")}
+                {item.role === "assistant" && (
+                  <div className="flex flex-col !min-h-full justify-end">
+                    <Avatar className="h-8 w-8 bg-gray-four">
+                      <AvatarImage src={FluiFrog.src} />
+                      <AvatarFallback>AI</AvatarFallback>
+                    </Avatar>
+                  </div>
+                )}
+                {item.role === "user" && (
+                  <div className="flex flex-col !min-h-full justify-end order-last">
+                    <Avatar className="h-8 w-8">
+                      <AvatarFallback>You</AvatarFallback>
+                    </Avatar>
+                  </div>
+                )}
+                <div
+                  className={`relative max-w-[85%] px-3 py-2 text-sm ${
+                    item.role === "user"
+                      ? "bg-pastel-blue rounded-xl rounded-br-md"
+                      : "bg-gray-four text-gray-three rounded-xl rounded-bl-md"
+                  }`}
+                >
+                  {item.formatted.transcript ||
+                    item.formatted.text ||
+                    (item.formatted.audio?.length ? "..." : "")}
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute -right-10 top-0 hidden h-8 w-8 group-hover:flex"
+                >
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
               </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute -right-10 top-0 hidden h-8 w-8 group-hover:flex"
-              >
-                <MoreVertical className="h-4 w-4" />
-              </Button>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </CardContent>
 
@@ -254,8 +285,24 @@ const VoiceChat = () => {
             disabled={isConnected}
           />
           <Label htmlFor="vad-mode" className="text-white">
-            Enable Push to Talk
+            Disable Push to Talk
           </Label>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <HelpCircle className="h-4 w-4 text-gray-one cursor-help" />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-[250px]">
+                <p>
+                  With Push to Talk disabled, you can speak to Flui in real-time
+                  having to press the button.
+                  <span className="ml-1 text-yellow-500">
+                    Warning: This may consume your minutes faster!
+                  </span>
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
 
         {/* Push to Talk Button */}
@@ -281,7 +328,7 @@ const VoiceChat = () => {
           ) : (
             <Zap className="w-4 h-4 mr-2" />
           )}
-          {isConnected ? "Disconnect" : "Connect"}
+          {isConnected ? "End Session" : "Start Session"}
         </Button>
       </CardFooter>
     </Card>
