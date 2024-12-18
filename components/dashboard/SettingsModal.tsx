@@ -19,7 +19,6 @@ import {
 } from "@/lib/constants";
 import { getFlagForLanguage } from "@/app/lib/supportedFlags";
 import Image from "next/image";
-import { useEffect } from "react";
 
 interface SettingsModalProps {
   open: boolean;
@@ -27,28 +26,8 @@ interface SettingsModalProps {
 }
 
 const SettingsModal = ({ open, onOpenChange }: SettingsModalProps) => {
-  const {
-    targetLanguage,
-    nativeLanguage,
-    skillLevel,
-    setTargetLanguage,
-    setNativeLanguage,
-    setSkillLevel,
-  } = useSettings();
-
-  useEffect(() => {
-    if (!nativeLanguage) {
-      const browserLang = navigator.language;
-      const langCode = browserLang.split("-")[0].toLowerCase();
-
-      const appLangCode = BROWSER_TO_APP_LANG_CODES[langCode];
-      const isSupported = SUPPORTED_LANGUAGES.some(
-        (lang) => lang.code === appLangCode
-      );
-
-      setNativeLanguage(isSupported ? appLangCode : "english");
-    }
-  }, [nativeLanguage, setNativeLanguage]);
+  const { targetLanguage, skillLevel, setTargetLanguage, setSkillLevel } =
+    useSettings();
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -60,32 +39,6 @@ const SettingsModal = ({ open, onOpenChange }: SettingsModalProps) => {
           <div className="grid gap-2">
             <label>Target Language</label>
             <Select value={targetLanguage} onValueChange={setTargetLanguage}>
-              <SelectTrigger className="border border-gray-four">
-                <SelectValue placeholder="Select language" />
-              </SelectTrigger>
-              <SelectContent className="bg-dark-gray-two border border-gray-four text-white">
-                {SUPPORTED_LANGUAGES.map((lang) => (
-                  <SelectItem key={lang.code} value={lang.code}>
-                    <div className="flex flex-row items-center gap-2">
-                      <Image
-                        src={
-                          getFlagForLanguage(lang.name) ||
-                          "/images/flags/british-flag.png"
-                        }
-                        alt={lang.name}
-                        width={20}
-                        height={20}
-                      />
-                      <p>{lang.name}</p>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="grid gap-2">
-            <label>Native Language (Auto-detected)</label>
-            <Select value={nativeLanguage} onValueChange={setNativeLanguage}>
               <SelectTrigger className="border border-gray-four">
                 <SelectValue placeholder="Select language" />
               </SelectTrigger>

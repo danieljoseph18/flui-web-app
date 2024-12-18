@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { useRef, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -161,6 +161,23 @@ const LoginSignupModal = ({ children, callbackUrl }: LoginSignupModalProps) => {
             Forgot your password?
           </Link>
         )}
+
+        <div className="text-center text-xs text-gray-500 mt-4">
+          By continuing, you agree to our{" "}
+          <Link
+            href="/terms-of-service"
+            className="text-blue-500 hover:underline"
+          >
+            Terms of Service
+          </Link>{" "}
+          and{" "}
+          <Link
+            href="/privacy-policy"
+            className="text-blue-500 hover:underline"
+          >
+            Privacy Policy
+          </Link>
+        </div>
       </DialogContent>
     </Dialog>
   );

@@ -6,6 +6,9 @@ import Image from "next/image";
 import { useState } from "react";
 import SettingsModal from "./SettingsModal";
 import "@/app/styles/profile-styles.css";
+import { useSettings } from "@/store/useSettings";
+import { getFlagForLanguage } from "@/app/lib/supportedFlags";
+import { SUPPORTED_LANGUAGES } from "@/lib/constants";
 
 interface ProfileCardProps {
   name: string;
@@ -14,16 +17,30 @@ interface ProfileCardProps {
 
 const ProfileCard = ({ name, description }: ProfileCardProps) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const { targetLanguage } = useSettings();
+
+  const currentLanguage = SUPPORTED_LANGUAGES.find(
+    (lang) => lang.code === targetLanguage
+  )?.name;
 
   return (
     <div className="relative rounded-3xl bg-pastel-yellow p-6 text-brownish-yellow">
       <Button
         variant="ghost"
         size="icon"
-        className="absolute right-2 top-2 h-8 w-8 rounded-full bg-black/10 transition-transform hover:animate-spin"
+        className="absolute right-2 top-2 h-8 w-8 rounded-full bg-black/10 transition-transform hover:scale-110 p-1"
         onClick={() => setSettingsOpen(true)}
       >
-        <Settings className="h-4 w-4" />
+        <Image
+          src={
+            getFlagForLanguage(currentLanguage || "") ||
+            "/images/flags/british-flag.png"
+          }
+          alt="Language flag"
+          width={24}
+          height={24}
+          className="rounded-sm object-cover"
+        />
       </Button>
       <div className="mb-4 text-sm uppercase">Tutor</div>
       <div className="mb-4 flex justify-center">

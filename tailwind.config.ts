@@ -63,8 +63,8 @@ export default {
         "dark-gray": "#242424",
         "dark-gray-two": "#2D2E2E",
         "dark-gray-three": "#3D3D3D",
-        "pastel-yellow": "#F3DF90",
-        "pastel-blue": "#9ED1D9",
+        "pastel-yellow": "#FFEA96",
+        "pastel-blue": "#B0E9F2",
         "brownish-yellow": "#544D31",
       },
       borderRadius: {

@@ -51,14 +51,7 @@ const DifferenceCard = ({
       <h3 className="text-xl font-semibold mb-3">{title}</h3>
       <p className="text-gray-600">{description}</p>
     </CardContent>
-    <CardFooter className="pb-6 px-6">
-      <Button
-        variant="link"
-        className="p-0 h-auto text-main-green hover:text-green-hover"
-      >
-        Read More <ArrowRight className="ml-1 size-4" />
-      </Button>
-    </CardFooter>
+    <CardFooter className="pb-6 px-6"></CardFooter>
   </Card>
 );
 

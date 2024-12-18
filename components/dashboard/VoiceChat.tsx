@@ -99,11 +99,10 @@ const VoiceChat = () => {
   const wavStreamPlayerRef = useRef(new WavStreamPlayer({ sampleRate: 24000 }));
   const clientRef = useRef(new RealtimeClient({ url: WS_BACKEND_URL }));
 
-  const { targetLanguage, nativeLanguage, skillLevel } = useSettings();
+  const { targetLanguage, skillLevel } = useSettings();
 
   const instructions = useTutorInstructions({
     targetLanguage,
-    nativeLanguage,
     skillLevel,
     mode: selectedMode ? selectedMode.title : "Story Mode",
   });

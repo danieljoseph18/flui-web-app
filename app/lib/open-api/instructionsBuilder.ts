@@ -4,7 +4,7 @@ export class TutorInstructionsBuilder {
 
   constructor(config: TutorConfig) {
     this.config = config;
-    this.baseInstructions = `You are a ${config.targetLanguage} language tutor. Your student speaks ${config.nativeLanguage} and is at a ${config.skillLevel} level.`;
+    this.baseInstructions = `You are a ${config.targetLanguage} language tutor. Your student is at a ${config.skillLevel} level.`;
   }
 
   private getSpeedInstruction(): string {
@@ -14,15 +14,6 @@ export class TutorInstructionsBuilder {
       advanced: "Speak at natural speed with native-like pacing.",
     };
     return speeds[this.config.skillLevel];
-  }
-
-  private getTranslationInstruction(): string {
-    const translations = {
-      beginner: `Translate every new phrase into ${this.config.nativeLanguage}.`,
-      intermediate: `Translate only complex phrases into ${this.config.nativeLanguage}.`,
-      advanced: "Minimize translations and focus on immersion.",
-    };
-    return translations[this.config.skillLevel];
   }
 
   private getModeSpecificInstructions(): string {
@@ -64,7 +55,6 @@ export class TutorInstructionsBuilder {
 
         Speaking Style:
         ${this.getSpeedInstruction()}
-        ${this.getTranslationInstruction()}
 
         Core Behavioral Instructions:
         1. Stop speaking immediately when the student speaks

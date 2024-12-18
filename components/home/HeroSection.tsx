@@ -46,9 +46,9 @@ const HeroSection = () => {
           </h1>
           <p className="leading-normal text-gray-one text-sm md:text-lg sm:leading-8">
             Transform your language speaking skills through real-time AI
-            conversations. Practice speaking any language 24/7 with your
-            personal AI language tutor, to take you from intermediate to fluent,
-            for a fraction of the cost.
+            conversations. Practice speaking any language, at any time, with
+            your personal AI language tutor, to take you from intermediate to
+            fluent, for a fraction of the cost.
           </p>
           <div className="flex items-center gap-8">
             <LoginSignupModal>
